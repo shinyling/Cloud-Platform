@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>platform-web</artifactId>
-
+    <artifactId>wy-web</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -38,7 +37,7 @@
 
         <dependency>
             <groupId>com.everwing.cloud</groupId>
-            <artifactId>platform-api</artifactId>
+            <artifactId>wy-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

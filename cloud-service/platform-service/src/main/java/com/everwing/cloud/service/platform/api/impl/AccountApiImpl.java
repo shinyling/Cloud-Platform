@@ -1,8 +1,8 @@
 package com.everwing.cloud.service.platform.api.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.everwing.cloud.common.entity.Account;
 import com.everwing.cloud.service.platform.api.AccountApi;
-import com.everwing.cloud.service.platform.entity.Account;
 import com.everwing.cloud.service.platform.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,7 +1,7 @@
 package com.everwing.cloud.service.platform.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.everwing.cloud.service.platform.entity.Account;
+import com.everwing.cloud.common.entity.Account;
 import com.everwing.cloud.service.platform.mapper.AccountMapper;
 import com.everwing.cloud.service.platform.service.IAccountService;
 import org.springframework.stereotype.Service;

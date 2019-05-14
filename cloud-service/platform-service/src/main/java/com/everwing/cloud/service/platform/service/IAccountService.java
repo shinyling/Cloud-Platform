@@ -1,7 +1,7 @@
 package com.everwing.cloud.service.platform.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.everwing.cloud.service.platform.entity.Account;
+import com.everwing.cloud.common.entity.Account;
 
 /**
  * <p>
