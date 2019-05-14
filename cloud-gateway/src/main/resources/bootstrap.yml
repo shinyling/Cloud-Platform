@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: wy-web
+          uri: lb://wy-web
+          predicates:
+            - Path=/wy/**
+        - id: platform-web
+          uri: lb://platform-web
+          predicates:
+            - Path=/platform/**
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  level:
+    root: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+server:
+  port: 6666

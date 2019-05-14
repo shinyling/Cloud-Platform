@@ -1,0 +1,33 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.1.20.11:3306/wypt
+    username: root
+    password: m123
+  boot:
+    admin:
+      client:
+        instance:
+          name: wy-service
+          prefer-ip: true
+          service-url: http://localhost:8001
+        auto-registration: true
+        enabled: true
+        url: http://localhost:8103
+logging:
+  level:
+    root: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: ALWAYS

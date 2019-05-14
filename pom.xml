@@ -12,6 +12,7 @@
         <module>cloud-web</module>
         <module>cloud-service</module>
         <module>generator</module>
+        <module>cloud-gateway</module>
     </modules>
 
     <parent>
