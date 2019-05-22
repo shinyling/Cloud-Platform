@@ -1,0 +1,27 @@
+server:
+  port: 8223
+spring:
+  application:
+    name: auth-client
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC
+    username: root
+    password: shiny
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8222/uaa/users/current #获取当前Token的用户信息
+    client:
+      clientId: client
+      clientSecret: secret
+      accessTokenUri: http://localhost:8222/uaa/oauth/token #获取Token
+      grant-type: authorization_code
+      scope: app
+logging:
+  level:
+    root: debug
