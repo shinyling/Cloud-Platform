@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -42,6 +41,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     UserServiceDetail userServiceDetail;
 
     @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
     DataSource dataSource;
 
     @Bean // 声明TokenStore实现
@@ -56,19 +58,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        String secret = new BCryptPasswordEncoder().encode("secret");
-
-        clients
-                // 客户端信息存储在内存中
-                .inMemory()
-                // 客户端 id
-                .withClient("client")
-                // 跳转uri
-                .redirectUris("http://www.baidu.com")
-                // 客户端 secret
-                .secret(secret)
-                // 授权模式
-                .authorizedGrantTypes("refresh_token","authorization_code");
+        clients.withClientDetails(clientDetails());
     }
 
     @Override

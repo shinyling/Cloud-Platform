@@ -28,11 +28,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .requestMatchers().anyRequest()
+        http.requestMatchers()
+                .antMatchers("/login", "/oauth/*")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/oauth/**").permitAll().anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().permitAll();
     }
 
     @Override
@@ -44,5 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }
