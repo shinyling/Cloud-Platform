@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author DELL shiny
  * @create 2019/5/21
@@ -26,5 +28,9 @@ public class UserService {
         String password=user.getPassword();
         user.setPassword(encoder.encode(password));
         return userDao.save(user);
+    }
+
+    public List<User> list() {
+        return userDao.findAll();
     }
 }

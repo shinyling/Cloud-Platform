@@ -81,7 +81,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonLocked() {
-        return isLock==0;
+        return true;
     }
 
     @Override
@@ -91,6 +91,6 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public boolean isEnabled() {
-        return status==1;
+        return true;
     }
 }

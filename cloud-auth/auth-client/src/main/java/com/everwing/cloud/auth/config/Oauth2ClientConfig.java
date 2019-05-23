@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.web.context.request.RequestContextListener;
 
 /**
  * @author DELL shiny
@@ -38,6 +39,11 @@ public class Oauth2ClientConfig {
     public OAuth2RestTemplate clientCredentialsRestTemplate() {
         //向Uaa服务请求的
         return new OAuth2RestTemplate(clientCredentialsResourceDetails());
+    }
+
+    @Bean
+    public RequestContextListener requestContextListener() {
+        return new RequestContextListener();
     }
 
 }

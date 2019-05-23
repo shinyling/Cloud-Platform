@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +49,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Bean // 声明TokenStore实现
     public TokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
+        return new RedisTokenStore(redisConnectionFactory);
     }
 
     @Bean // 声明 ClientDetails实现
@@ -70,10 +71,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         // 配置TokenServices参数
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(endpoints.getTokenStore());
-        tokenServices.setSupportRefreshToken(false);
+        tokenServices.setSupportRefreshToken(true);
         tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
         tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
-        tokenServices.setAccessTokenValiditySeconds( (int) TimeUnit.DAYS.toSeconds(30)); // 30天
+        tokenServices.setAccessTokenValiditySeconds( (int) TimeUnit.DAYS.toSeconds(1)); // 1天
         endpoints.tokenServices(tokenServices);
     }
 

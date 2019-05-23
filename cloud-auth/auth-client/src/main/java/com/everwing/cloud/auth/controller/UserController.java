@@ -3,10 +3,9 @@ package com.everwing.cloud.auth.controller;
 import com.everwing.cloud.auth.entity.User;
 import com.everwing.cloud.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author DELL shiny
@@ -22,5 +21,10 @@ public class UserController {
     @PostMapping("registry")
     public User createUser(@RequestBody User user){
         return userService.create(user);
+    }
+
+    @GetMapping("list")
+    public List<User> list(){
+        return userService.list();
     }
 }
