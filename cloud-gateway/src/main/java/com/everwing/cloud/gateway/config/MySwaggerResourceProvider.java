@@ -2,7 +2,7 @@ package com.everwing.cloud.gateway.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.stereotype.Component;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
@@ -46,12 +46,8 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
         List<String> routeHosts = new ArrayList<>();
         // 由于我的网关采用的是负载均衡的方式，因此我需要拿到所有应用的serviceId
         // 获取所有可用的host：serviceId
-        routeLocator.getRoutes().filter(route -> route.getUri().getHost() != null)
-                .filter(route -> !self.equals(route.getUri().getHost()))
-                .filter(route -> !route.getUri().getHost().contains("service"))
-                .filter(route -> !route.getUri().getHost().contains("admin"))
-                .subscribe(route -> routeHosts.add(route.getUri().getHost()));
-
+        routeHosts.add("platform");
+        routeHosts.add("wy");
         // 记录已经添加过的server，存在同一个应用注册了多个服务在nacos上
         Set<String> dealed = new HashSet<>();
         routeHosts.forEach(instance -> {
