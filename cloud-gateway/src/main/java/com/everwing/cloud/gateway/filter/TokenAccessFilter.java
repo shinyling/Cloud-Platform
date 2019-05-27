@@ -3,6 +3,7 @@ package com.everwing.cloud.gateway.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Component
 @Slf4j
-public class AccessFilter extends ZuulFilter {
+public class TokenAccessFilter extends ZuulFilter {
     @Override
     public String filterType() {
-        return "pre";
+        return FilterConstants.PRE_TYPE;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class AccessFilter extends ZuulFilter {
 
         log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
 
-        Object accessToken = request.getParameter("accessToken");
+        Object accessToken = request.getHeader("accessToken");
         if(accessToken == null) {
             log.warn("access token is empty");
             ctx.setSendZuulResponse(false);
