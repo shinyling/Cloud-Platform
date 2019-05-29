@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
  * @author DELL shiny
  * @create 2019/5/10
  */
-@Component
-@Order(-10)
-@Aspect
 public class DataSourceAspect {
 
     @Pointcut("execution(* com.everwing.cloud.service.wy.api.impl.*.*(..))")

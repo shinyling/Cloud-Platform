@@ -1,4 +1,4 @@
-package com.everwing.cloud.web.platform.config;
+package com.everwing.cloud.web.wy.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

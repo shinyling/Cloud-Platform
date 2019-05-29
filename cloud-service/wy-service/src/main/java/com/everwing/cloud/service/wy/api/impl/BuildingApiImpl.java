@@ -3,8 +3,8 @@ package com.everwing.cloud.service.wy.api.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.everwing.cloud.platform.service.IBuildingService;
 import com.everwing.cloud.service.wy.api.BuildingApi;
-import com.everwing.cloud.service.wy.context.WyBusinessContext;
 import com.everwing.cloud.service.wy.entity.Building;
+import com.mysql.cj.x.protobuf.MysqlxExpect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +21,8 @@ public class BuildingApiImpl implements BuildingApi {
 
     @Override
     public Building queryBuilding(@RequestBody Building building) {
-        QueryWrapper queryWrapper=new QueryWrapper();
-        queryWrapper.eq("house_code",building.getHouseCode());
+        QueryWrapper<Building> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Building::getHouseCode, building.getHouseCode());
         return buildingService.getOne(queryWrapper);
     }
 }
