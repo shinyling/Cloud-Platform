@@ -8,4 +8,4 @@ spring:
         dashboard: localhost:8080
 logging:
   level:
-    root: debug
+    root: info

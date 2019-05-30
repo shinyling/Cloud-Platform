@@ -20,7 +20,7 @@ spring:
         url: http://localhost:8103
 logging:
   level:
-    root: debug
+    root: info
 management:
   endpoints:
     web:

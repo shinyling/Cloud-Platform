@@ -17,32 +17,38 @@ spring:
     sentinel:
       transport:
         dashboard: localhost:8080
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-          lowerCaseServiceId: true
-          filters:
-            - StripPrefix=1
-      routes:
-        - id: wy-web
-          uri: lb://wy-web
-          predicates:
-            - Path=/wy/**
-          filters:
-            - StripPrefix=1 #如果是面向服务的路由方式，必须配置filter将Path前缀去掉，有几个前缀就去掉几个，否则无法调用成功！！
-        - id: platform-web
-          uri: lb://platform-web
-          predicates:
-            - Path=/platform/**
-          filters:
-            - StripPrefix=1  #如果是面向服务的路由方式，必须配置filter将Path前缀去掉，有几个前缀就去掉几个，否则无法调用成功！！
-        - id: admin-web
-          uri: lb://admin-web
-          predicates:
-            - Path=/admin/**
-          filters:
-            - StripPrefix=1 #如果是面向服务的路由方式，必须配置filter将Path前缀去掉，有几个前缀就去掉几个，否则无法调用成功！！
+zuul:
+  host:
+    connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
+    socket-timeout-millis: 60000   #socket超时
+  routes:
+    wy:
+      path: /wy/**
+      serviceId: wy-web
+    platform:
+      path: /platform/**
+      service-id: platform-web
+      sensitive-headers:
+    admin:
+      path: /admin/**
+      service_id: admin-web
+      sensitive-headers:
+    auth:
+      path: /auth/**
+      service_id: auth-server
+      sensitive-headers:
+    redis:
+      host: 127.0.0.1
+      password:
+      port: 6379
+      timeout: 10000 # 连接超时时间（毫秒）
+      database: 0 # Redis默认情况下有16个分片，这里配置具体使用的分片，默认是0
+      lettuce:
+        pool:
+          max-active: 8 # 连接池最大连接数（使用负值表示没有限制）默认 8
+          max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）默认 -1
+          max-idle: 8 # 连接池中的最大空闲连接默认 8
+          min-idle: 0 # 连接池中的最小空闲连接默认 0
   main:
     allow-bean-definition-overriding: true
   boot:
@@ -55,9 +61,13 @@ spring:
         auto-registration: true
         enabled: true
         url: http://localhost:8103
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
 logging:
   level:
     org.springframework.cloud.gateway: debug
+    com.alibaba.nacos.client.naming: error
 management:
   endpoints:
     web:

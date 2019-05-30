@@ -29,9 +29,22 @@ spring:
         auto-registration: true
         enabled: true
         url: http://localhost:8103
+security:
+  oauth2:
+    resource:
+      id: platform-resource
+      user-info-uri: http://localhost:8888/auth/uaa/users/current #获取当前Token的用户信息
+      prefer-token-info: false
+    client:
+      clientId: client
+      clientSecret: secret
+      accessTokenUri: http://localhost:8888/auth/uaa/oauth/token #获取Token
+      grant-type: password
+      scope: app
 logging:
   level:
-    root: debug
+    root: info
+    com.alibaba.nacos.client.naming: error
 management:
   endpoints:
     web:
