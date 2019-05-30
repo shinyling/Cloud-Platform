@@ -15,4 +15,8 @@ public interface CompanyApi {
 
     @GetMapping("list")
     List<Company> list();
+
+    @GetMapping("query")
+    Company query(String companyId);
+
 }

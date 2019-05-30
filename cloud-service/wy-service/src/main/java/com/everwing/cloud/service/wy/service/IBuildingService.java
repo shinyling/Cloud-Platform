@@ -1,5 +1,6 @@
-package com.everwing.cloud.platform.service;
+package com.everwing.cloud.service.wy.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.everwing.cloud.service.wy.entity.Building;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBuildingService extends IService<Building> {
 
+    Building getOne(String companyId, QueryWrapper<Building> queryWrapper);
 }

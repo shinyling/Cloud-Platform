@@ -48,5 +48,4 @@ public class Account implements Serializable {
 
     private String mobile;
 
-
 }

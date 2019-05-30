@@ -13,8 +13,6 @@ public class DataBaseContextHolder {
 
     private static final ThreadLocal contextHolder = new ThreadLocal<>();
 
-    public static List<String> companyIds = new ArrayList<String>();
-
     public static void setCompanyId(final String companyId){
         Assert.notNull(companyId,"companyId can not be null");
         contextHolder.set(companyId);
@@ -26,10 +24,6 @@ public class DataBaseContextHolder {
 
     public static void clearCompanyId(){
         contextHolder.remove();
-    }
-
-    public static boolean containsCompanyId(String companyId){
-        return companyIds.contains(companyId);
     }
 
 }

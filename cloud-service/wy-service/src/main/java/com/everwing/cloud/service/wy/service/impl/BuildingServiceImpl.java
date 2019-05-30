@@ -1,9 +1,10 @@
 package com.everwing.cloud.service.wy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.everwing.cloud.service.wy.entity.Building;
 import com.everwing.cloud.service.wy.mapper.BuildingMapper;
-import com.everwing.cloud.platform.service.IBuildingService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.everwing.cloud.service.wy.service.IBuildingService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> implements IBuildingService {
 
+    @Override
+    public Building getOne(String companyId, QueryWrapper<Building> queryWrapper) {
+        return baseMapper.selectOne(queryWrapper);
+    }
 }

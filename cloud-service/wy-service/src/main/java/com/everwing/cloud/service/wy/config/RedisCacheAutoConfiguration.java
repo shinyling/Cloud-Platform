@@ -1,4 +1,4 @@
-package com.everwing.cloud.gateway.config;
+package com.everwing.cloud.service.wy.config;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -20,6 +20,7 @@ import java.io.Serializable;
 public class RedisCacheAutoConfiguration {
 
     @Bean
+
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
 
         RedisTemplate<String, Serializable> template = new RedisTemplate<>();
