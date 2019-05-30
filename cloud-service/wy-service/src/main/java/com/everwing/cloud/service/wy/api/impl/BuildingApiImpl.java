@@ -34,7 +34,7 @@ public class BuildingApiImpl implements BuildingApi {
             Account account=new Account();
             account.setAccountName(username);
             account=accountService.queryAccount(account);
-            //todo 设置companyId
+            //todo 设置companyId 由于authserver 未与平台数据库合并暂时通过写死companyId来进行数据源切换
         }
         if(StringUtils.isEmpty(companyId)){
             throw new RuntimeException("无法切换数据源，系统中断！");
