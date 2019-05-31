@@ -2,9 +2,6 @@ package com.everwing.cloud.service.wy.datasource;
 
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author DELL shiny
  * @create 2019/5/10

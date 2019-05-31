@@ -1,8 +1,8 @@
 package com.everwing.cloud.service.wy.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.everwing.cloud.service.wy.entity.Building;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.everwing.cloud.service.wy.entity.Building;
 
 /**
  * <p>

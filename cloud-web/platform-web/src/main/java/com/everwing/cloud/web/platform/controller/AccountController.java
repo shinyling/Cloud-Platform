@@ -1,9 +1,13 @@
 package com.everwing.cloud.web.platform.controller;
 
 import com.everwing.cloud.common.entity.Account;
+import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.web.platform.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author DELL shiny
@@ -17,7 +21,7 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("query")
-    public Account query(@RequestBody Account account){
-        return accountService.queryAccount(account);
+    public ResultJson query(@RequestBody Account account){
+        return ResultJson.success(accountService.queryAccount(account));
     }
 }

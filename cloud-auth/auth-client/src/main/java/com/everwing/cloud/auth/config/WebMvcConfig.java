@@ -3,14 +3,10 @@ package com.everwing.cloud.auth.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.alibaba.fastjson.support.springfox.SwaggerJsonSerializer;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import springfox.documentation.spring.web.json.Json;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 

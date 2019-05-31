@@ -1,8 +1,6 @@
 package com.everwing.cloud.service.wy.datasource;
 
 import com.everwing.cloud.service.platform.entity.Company;
-import com.everwing.cloud.service.wy.remote.CompanyService;
-import com.everwing.cloud.service.wy.utils.SpringBeanLocator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

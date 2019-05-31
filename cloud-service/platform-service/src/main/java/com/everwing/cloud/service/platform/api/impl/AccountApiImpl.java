@@ -20,8 +20,7 @@ public class AccountApiImpl implements AccountApi {
     @Override
     public Account queryAccount(Account account) {
         QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("account_name",account.getAccountName());
-        queryWrapper.eq("password",account.getPassword());
+        queryWrapper.eq("name",account.getName());
         queryWrapper.eq("type",1);
         return accountService.getOne(queryWrapper);
     }

@@ -29,12 +29,12 @@ public class BuildingApiImpl implements BuildingApi {
         QueryWrapper<Building> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Building::getHouseCode, building.getHouseCode());
         String username=building.getUsername();
-        String companyId="09841dc0-204a-41f2-a175-20a6dcee0187";
+        String companyId=null;
         if(StringUtils.isNotBlank(username)){
             Account account=new Account();
-            account.setAccountName(username);
+            account.setName(username);
             account=accountService.queryAccount(account);
-            //todo 设置companyId 由于authserver 未与平台数据库合并暂时通过写死companyId来进行数据源切换
+            companyId=account.getCompanyId();
         }
         if(StringUtils.isEmpty(companyId)){
             throw new RuntimeException("无法切换数据源，系统中断！");

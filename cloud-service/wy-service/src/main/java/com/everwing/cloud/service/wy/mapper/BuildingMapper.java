@@ -1,7 +1,7 @@
 package com.everwing.cloud.service.wy.mapper;
 
-import com.everwing.cloud.service.wy.entity.Building;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.everwing.cloud.service.wy.entity.Building;
 
 /**
  * <p>
