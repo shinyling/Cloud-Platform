@@ -2,6 +2,7 @@ package com.everwing.cloud.web.wy.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,6 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 public class FeignConfig implements RequestInterceptor {
 
     final String TOKEN="token";
+
+    @Bean
+    public ShinyRequestInterceptor requestInterceptor(){
+        return new ShinyRequestInterceptor();
+    }
 
     @Override
     public void apply(RequestTemplate requestTemplate) {

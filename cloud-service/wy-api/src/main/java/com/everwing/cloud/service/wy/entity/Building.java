@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("tc_building")
-public class Building extends BaseEntity {
+public class Building{
 
     private static final long serialVersionUID = 1L;
 

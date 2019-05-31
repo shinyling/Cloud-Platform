@@ -14,7 +14,7 @@ public class WyBusinessContext {
         threadLocal.set(account);
     }
 
-    public String getCompanyId(){
+    public static String getCompanyId(){
         return threadLocal.get().getCompanyId();
     }
 }
