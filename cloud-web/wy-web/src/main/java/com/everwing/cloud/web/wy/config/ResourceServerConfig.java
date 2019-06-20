@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    private static final String RESOURCE_ID="platform-resource";
+    private static final String RESOURCE_ID="wy-resource";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
