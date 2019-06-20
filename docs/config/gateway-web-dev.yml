@@ -25,6 +25,7 @@ zuul:
     wy:
       path: /wy/**
       serviceId: wy-web
+      sensitive-headers:
     platform:
       path: /platform/**
       service-id: platform-web
