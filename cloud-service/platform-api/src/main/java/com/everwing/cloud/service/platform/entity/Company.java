@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -21,8 +22,6 @@ public class Company implements Serializable {
 
     private String companyId;
 
-    private String code;
-
     private String jdbcUrl;
 
     private String jdbcUsername;
@@ -35,16 +34,13 @@ public class Company implements Serializable {
 
     private String companyAddress;
 
-    private String bizRegistryLicenseNum;
+    private String state;
 
-    private String logoFileId;
+    private String createBy;
 
-    private String bizSaleLicenseFileId;
+    private LocalDateTime createTime;
 
-    private String orgCodeFileId;
+    private String updateBy;
 
-    private String taxLicenseFileId;
-
-    private String propertyCertFileId;
-
+    private LocalDateTime updateTime;
 }

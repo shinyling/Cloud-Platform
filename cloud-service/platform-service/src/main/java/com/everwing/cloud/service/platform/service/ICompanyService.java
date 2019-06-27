@@ -13,4 +13,5 @@ import com.everwing.cloud.service.platform.entity.Company;
  */
 public interface ICompanyService extends IService<Company> {
 
+    Company createSchema(Company company);
 }

@@ -2,6 +2,7 @@ package com.everwing.cloud.service.platform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.everwing.cloud.service.platform.entity.Company;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.everwing.cloud.service.platform.entity.Company;
  */
 public interface CompanyMapper extends BaseMapper<Company> {
 
+    void createSchema(@Param("dbName") String dbName, @Param("username") String username,@Param("password") String password);
 }

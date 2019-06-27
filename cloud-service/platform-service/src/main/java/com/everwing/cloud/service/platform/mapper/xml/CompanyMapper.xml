@@ -2,4 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.everwing.cloud.service.platform.mapper.CompanyMapper">
 
+    <update id="createSchema">
+        create database if not exists #{dbName} default character set utf8;
+        GRANT ALL ON `#{dbName}`.* TO '#{username}' identified by '#{password}';
+        flush privileges;
+
+        use `#{dbName}`;
+        create table t_sys_user(
+          id varchar(36),
+          name varchar(50),
+          phone varchar(20),
+          password varchar(200),
+          create_by varchar(36),
+          create_time datetime,
+          update_by varchar(36),
+          update_time datetime
+        );
+
+        create table t_sys_operation_log(
+            id varchar(36),
+            operator varchar(36),
+            operation varchar(12),
+            table_name varchar(20),
+            after_json varchar(200)
+        );
+
+        create table t_sys_business_log(
+            id varchar(36),
+            business_name varchar(50),
+            business_state varchar(20),
+            operator varchar(36),
+            update_time datetime
+        );
+        use `ucenter`;
+    </update>
 </mapper>

@@ -79,7 +79,7 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude(new String[]{"t_jf_rule_price"});
+        strategy.setInclude(new String[]{"tc_building"});
         strategy.setTablePrefix("t_jf");
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);

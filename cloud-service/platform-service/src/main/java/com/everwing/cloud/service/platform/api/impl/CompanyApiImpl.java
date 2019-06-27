@@ -1,6 +1,7 @@
 package com.everwing.cloud.service.platform.api.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.everwing.cloud.common.exception.BusinessException;
 import com.everwing.cloud.service.platform.api.CompanyApi;
 import com.everwing.cloud.service.platform.entity.Company;
 import com.everwing.cloud.service.platform.service.ICompanyService;
@@ -30,5 +31,10 @@ public class CompanyApiImpl implements CompanyApi {
         wrapper.lambda().eq(Company::getCompanyId,companyId);
         Company company=companyService.getOne(wrapper);
         return company;
+    }
+
+    @Override
+    public Company insert(Company company){
+        return companyService.createSchema(company);
     }
 }
