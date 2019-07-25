@@ -44,8 +44,8 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
             companyMapper.createSchema(dbName,username,password);
             company.setJdbcUrl(jdbcUrl);
             company.setUpdateTime(LocalDateTime.now());
-            company.setUpdateBy();
+            company.setUpdateBy("sysAdmin");
         }
-        return null;
+        return company;
     }
 }
