@@ -8,7 +8,6 @@
         <module>platform-service</module>
         <module>wy-api</module>
         <module>wy-service</module>
-        <module>cloud-common</module>
     </modules>
     <parent>
         <groupId>com.everwing</groupId>

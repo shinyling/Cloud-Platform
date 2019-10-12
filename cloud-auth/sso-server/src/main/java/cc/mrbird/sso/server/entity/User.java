@@ -1,4 +1,4 @@
-package com.everwing.cloud.auth.entity;
+package cc.mrbird.sso.server.entity;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +22,7 @@ public class User implements UserDetails, Serializable {
     private long id;
 
     @Column(nullable = false,  unique = true)
-    private String username;
+    private String name;
 
     @Column
     private String password;
@@ -44,7 +44,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return username;
+        return name;
     }
 
     @Override

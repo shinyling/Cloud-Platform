@@ -15,6 +15,7 @@
         <module>generator</module>
         <module>cloud-gateway</module>
         <module>cloud-auth</module>
+        <module>cloud-common</module>
     </modules>
 
     <parent>
@@ -59,4 +60,12 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

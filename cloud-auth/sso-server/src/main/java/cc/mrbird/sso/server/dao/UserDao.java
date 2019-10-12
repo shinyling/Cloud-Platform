@@ -1,6 +1,6 @@
-package com.everwing.cloud.auth.dao;
+package cc.mrbird.sso.server.dao;
 
-import com.everwing.cloud.auth.entity.User;
+import cc.mrbird.sso.server.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserDao extends JpaRepository<User,Long> {
 
-    User findByUsername(String username);
+    User findByName(String name);
 }

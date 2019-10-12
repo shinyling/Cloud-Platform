@@ -12,9 +12,6 @@ server:
   port: 9090
   servlet:
     context-path: /app1
-spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC
-    username: root
-    password: shiny
+logging:
+  level:
+    root: debug
