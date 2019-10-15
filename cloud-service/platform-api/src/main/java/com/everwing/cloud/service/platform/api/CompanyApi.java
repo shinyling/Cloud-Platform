@@ -1,10 +1,9 @@
 package com.everwing.cloud.service.platform.api;
 
-import com.everwing.cloud.common.exception.BusinessException;
-import com.everwing.cloud.service.platform.entity.Company;
+import com.everwing.cloud.service.platform.vo.Company;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * @author DELL shiny
  * @create 2019/5/9
  */
-@RequestMapping("platform-api-company")
+@FeignClient("cloud-provider-platform")
 public interface CompanyApi {
 
     @GetMapping("list")

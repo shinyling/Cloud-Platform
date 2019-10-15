@@ -1,6 +1,6 @@
 spring:
   application:
-    name: platform-web
+    name: platform-api
   profiles:
     active: dev
   cloud:

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: wy-web
+    name: wy-api
   profiles:
     active: dev
   cloud:

@@ -23,7 +23,7 @@ spring:
     admin:
       client:
         instance:
-          name: wy-web
+          name: wy-api
           prefer-ip: true
           service-url: http://localhost:8102
         auto-registration: true

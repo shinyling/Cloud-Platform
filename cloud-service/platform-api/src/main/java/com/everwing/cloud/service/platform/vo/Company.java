@@ -1,4 +1,4 @@
-package com.everwing.cloud.service.platform.entity;
+package com.everwing.cloud.service.platform.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

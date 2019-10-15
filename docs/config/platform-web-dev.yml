@@ -23,7 +23,7 @@ spring:
     admin:
       client:
         instance:
-          name: platform-web
+          name: platform-api
           prefer-ip: true
           service-url: http://localhost:8101
         auto-registration: true

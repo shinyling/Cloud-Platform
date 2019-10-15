@@ -32,7 +32,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.everwing.cloud.web.wy.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.everwing.cloud.api.wy.controller"))
                 .paths(PathSelectors.any())
                 .build().securitySchemes(Collections.singletonList(securityScheme()))
                 .securityContexts(Collections.singletonList(securityContext()));

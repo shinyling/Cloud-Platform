@@ -1,9 +1,9 @@
 package com.everwing.cloud.service.platform.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.everwing.cloud.service.platform.entity.Company;
 import com.everwing.cloud.service.platform.mapper.CompanyMapper;
 import com.everwing.cloud.service.platform.service.ICompanyService;
+import com.everwing.cloud.service.platform.vo.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

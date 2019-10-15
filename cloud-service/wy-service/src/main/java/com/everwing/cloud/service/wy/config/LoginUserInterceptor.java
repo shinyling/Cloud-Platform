@@ -1,6 +1,6 @@
 package com.everwing.cloud.service.wy.config;
 
-import com.everwing.cloud.common.entity.Account;
+import com.everwing.cloud.common.entity.platform.Account;
 import com.everwing.cloud.service.wy.context.WyBusinessContext;
 import com.everwing.cloud.service.wy.remote.AccountService;
 import lombok.extern.slf4j.Slf4j;

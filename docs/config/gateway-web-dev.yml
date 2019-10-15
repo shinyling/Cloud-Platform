@@ -24,15 +24,15 @@ zuul:
   routes:
     wy:
       path: /wy/**
-      serviceId: wy-web
+      serviceId: wy-api
       sensitive-headers:
     platform:
       path: /platform/**
-      service-id: platform-web
+      service-id: platform-api
       sensitive-headers:
     admin:
       path: /admin/**
-      service_id: admin-web
+      service_id: admin-api
       sensitive-headers:
     auth:
       path: /auth/**
@@ -56,7 +56,7 @@ zuul:
     admin:
       client:
         instance:
-          name: gateway-web
+          name: gateway-api
           prefer-ip: true
           service-url: http://localhost:8888
         auto-registration: true

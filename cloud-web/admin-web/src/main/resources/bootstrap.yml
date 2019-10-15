@@ -1,6 +1,6 @@
 spring:
   application:
-    name: admin-web
+    name: admin-api
   profiles:
     active: dev
   cloud:

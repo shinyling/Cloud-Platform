@@ -1,0 +1,13 @@
+#通用配置文件
+# 默认开发环境
+spring:
+  profiles:
+    active: dev
+##### spring-boot-actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
+    health:
+      show-details: always

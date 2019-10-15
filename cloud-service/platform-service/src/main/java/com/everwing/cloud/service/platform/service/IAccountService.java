@@ -1,7 +1,7 @@
 package com.everwing.cloud.service.platform.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.everwing.cloud.common.entity.Account;
+import com.everwing.cloud.service.platform.entity.User;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.everwing.cloud.common.entity.Account;
  * @author shiny
  * @since 2019-05-09
  */
-public interface IAccountService extends IService<Account> {
+public interface IAccountService extends IService<User> {
 
 }

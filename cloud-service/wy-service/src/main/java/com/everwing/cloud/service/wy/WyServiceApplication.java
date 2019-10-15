@@ -1,7 +1,6 @@
 package com.everwing.cloud.service.wy;
 
-import com.everwing.cloud.service.platform.entity.Company;
-import com.everwing.cloud.service.wy.remote.AccountService;
+import com.everwing.cloud.common.entity.platform.Company;
 import com.everwing.cloud.service.wy.remote.CompanyService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;

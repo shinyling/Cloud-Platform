@@ -1,6 +1,6 @@
 package com.everwing.cloud.web.platform.controller;
 
-import com.everwing.cloud.common.entity.Account;
+import com.everwing.cloud.common.entity.platform.Account;
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.web.platform.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
