@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: auth-server
   datasource:
@@ -25,6 +27,7 @@ server:
 logging:
   level:
     root: debug
+  config: classpath:logback-spring-${spring.profiles.active}.xml
 management:
   endpoints:
     web:

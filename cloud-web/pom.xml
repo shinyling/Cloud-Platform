@@ -12,8 +12,6 @@
     <artifactId>cloud-web</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>platform-web</module>
-        <module>wy-web</module>
         <module>admin-web</module>
     </modules>
 

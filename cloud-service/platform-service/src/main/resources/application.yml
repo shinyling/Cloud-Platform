@@ -1,0 +1,37 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC
+    username: root
+    password: shiny
+security:
+  oauth2:
+    resource:
+      id: platform-resource
+      user-info-uri: http://localhost:8222/uaa/users/current #获取当前Token的用户信息
+      prefer-token-info: false
+    client:
+      clientId: client
+      clientSecret: secret
+      accessTokenUri: http://localhost:8222/uaa/oauth/token #获取Token
+      grant-type: password
+      scope: app
+logging:
+  level:
+    root: info
+    com.alibaba.nacos.client.naming: error
+  config: classpath:logback-spring-${spring.profiles.active}.xml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: ALWAYS
