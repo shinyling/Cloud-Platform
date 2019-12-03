@@ -1,21 +1,20 @@
 package com.everwing.cloud.service.wy.datasource;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.everwing.cloud.common.vo.UserVo;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson.JSON;
+import com.everwing.cloud.common.vo.UserVo;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author DELL shiny
@@ -33,16 +32,9 @@ public class DataSourceAspect {
     @Before("service()")
     public void dataSourceChange(JoinPoint joinPoint){
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-        log.info("authentication:[{}]",JSON.toJSONString(authentication.getPrincipal()));
+        log.info("Enter DataSourceAOP，authentication:[{}]",JSON.toJSONString(authentication.getPrincipal()));
         UserVo user=JSON.parseObject(JSON.toJSONString(authentication.getPrincipal()),UserVo.class);
-        log.info("companyId:[{}]",user.getCompanyId());
-        log.info("Enter DataSourceAOP");
-        String companyId = null;
-        Object[] args = joinPoint.getArgs();
-        if (args.length >= 1) {
-            companyId = String.valueOf(args[0]);
-        }
-        companyId = StringUtils.defaultIfBlank(companyId, DataSourceUtil.DEFAULT);
+        String companyId = StringUtils.defaultIfBlank(user.getCompanyId(), DataSourceUtil.DEFAULT);
         DataBaseContextHolder.setCompanyId(companyId);
     }
 
