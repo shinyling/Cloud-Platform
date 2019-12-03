@@ -11,13 +11,13 @@
         <module>sso-server</module>
     </modules>
     <parent>
-        <artifactId>cloud</artifactId>
+        <artifactId>cloud-platform</artifactId>
         <groupId>com.everwing</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>com.everwing</groupId>
     <artifactId>cloud-auth</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>cloud-auth</name>
     <description>Demo project for Spring Boot</description>
 
