@@ -1,13 +1,17 @@
 package com.everwing.cloud.auth.entity;
 
-import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+
+import javax.persistence.*;
+
+import com.everwing.cloud.common.vo.UserVo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.Data;
 
 /**
  * @author DELL shiny
@@ -26,6 +30,9 @@ public class User implements UserDetails, Serializable {
 
     @Column
     private String password;
+
+    @Column(name="company_id")
+    private String companyId;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -65,5 +72,11 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UserVo convertToUserVo(){
+        UserVo userVo=new UserVo();
+        BeanUtils.copyProperties(this,userVo);
+        return userVo;
     }
 }

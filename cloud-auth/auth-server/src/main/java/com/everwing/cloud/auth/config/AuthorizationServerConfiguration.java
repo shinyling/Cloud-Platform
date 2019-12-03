@@ -1,12 +1,20 @@
 package com.everwing.cloud.auth.config;
 
-import com.everwing.cloud.auth.service.UserServiceDetail;
+import java.util.concurrent.TimeUnit;
+
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -19,8 +27,8 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
-import javax.sql.DataSource;
-import java.util.concurrent.TimeUnit;
+import com.everwing.cloud.auth.converter.CustomTokenEnhancer;
+import com.everwing.cloud.auth.service.UserServiceDetail;
 
 /**
  * @author DELL shiny
@@ -56,6 +64,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         return new JdbcClientDetailsService(dataSource);
     }
 
+    @Bean
+    public CustomTokenEnhancer tokenEnhancer(){
+        return new CustomTokenEnhancer();
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientDetails());
@@ -66,14 +79,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints.tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userServiceDetail);
-
         // 配置TokenServices参数
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(endpoints.getTokenStore());
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
-        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
-        tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(6)); // 6min
+        tokenServices.setTokenEnhancer(tokenEnhancer());
+        tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(6));
         endpoints.tokenServices(tokenServices);
     }
 
@@ -84,4 +96,5 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
         security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
+
 }

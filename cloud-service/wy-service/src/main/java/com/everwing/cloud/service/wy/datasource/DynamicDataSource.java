@@ -1,10 +1,20 @@
 package com.everwing.cloud.service.wy.datasource;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.everwing.cloud.service.platform.vo.Company;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.stereotype.Component;
@@ -104,7 +114,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         DataBaseContextHolder.setCompanyId(DataSourceUtil.DEFAULT);
         // 查询所需信息
         List<Company> companyList= (List<Company>) redisTemplate.opsForValue().get("dataSource");
-        if(companyList.isEmpty()){
+        if(CollectionUtil.isEmpty(companyList)){
             throw new RuntimeException("未查询到公司信息,初始化失败!");
         }
         Map<String,Company> companyMap=companyList.stream().collect(Collectors.toMap(Company::getCompanyId,a -> a,(k1,k2)->k1));
@@ -126,6 +136,32 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     @Override
     public void afterPropertiesSet() {
         //do nothing just for override. becauseof targetDataSource management by self.
+    }
+
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        // 开启 PageHelper 的支持
+        return paginationInterceptor;
+    }
+
+    @Bean("sqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
+        // TODO
+        sqlSessionFactory.setDataSource(targetDataSource.get("default"));
+
+        MybatisConfiguration configuration = new MybatisConfiguration();
+        // 开启XML
+        configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
+        configuration.setJdbcTypeForNull(JdbcType.NULL);
+        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setCacheEnabled(false);
+        sqlSessionFactory.setConfiguration(configuration);
+        sqlSessionFactory.setPlugins(new Interceptor[]{ // PerformanceInterceptor(),OptimisticLockerInterceptor()
+                paginationInterceptor() // 添加分页功能
+        });
+        return sqlSessionFactory.getObject();
     }
 
 }

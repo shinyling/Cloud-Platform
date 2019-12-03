@@ -19,7 +19,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.1.20.11:3306/wypt
     username: root
-    password: m123
+    password: JJ_passwd@2017
 security:
   oauth2:
     resource:
@@ -47,3 +47,5 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+mybatis-plus:
+  mapper-locations: classpath:com/everwing/cloud/service/wy/mapper/xml

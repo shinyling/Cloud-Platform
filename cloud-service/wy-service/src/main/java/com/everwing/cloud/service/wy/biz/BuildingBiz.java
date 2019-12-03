@@ -23,7 +23,9 @@ public class BuildingBiz {
         QueryWrapper<Building> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("house_code",buildingVo.getHouseCode());
         Building building=buildingService.getOne(companyId,queryWrapper);
-        BeanUtils.copyProperties(building,buildingVo);
+        if(building!=null) {
+            BeanUtils.copyProperties(building, buildingVo);
+        }
         return buildingVo;
     }
 }

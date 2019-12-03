@@ -1,6 +1,8 @@
 package com.everwing.cloud.service.wy.datasource;
 
-import com.everwing.cloud.service.wy.remote.CompanyService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.everwing.cloud.common.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -10,6 +12,9 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,15 +27,15 @@ import org.springframework.stereotype.Component;
 @Order(-1)
 public class DataSourceAspect {
 
-
-    @Autowired
-    private CompanyService companyService;
-
     @Pointcut("execution(* com.everwing.cloud.service.wy.service.*.*(..))")
     public void service(){}
 
     @Before("service()")
     public void dataSourceChange(JoinPoint joinPoint){
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        log.info("authentication:[{}]",JSON.toJSONString(authentication.getPrincipal()));
+        UserVo user=JSON.parseObject(JSON.toJSONString(authentication.getPrincipal()),UserVo.class);
+        log.info("companyId:[{}]",user.getCompanyId());
         log.info("Enter DataSourceAOP");
         String companyId = null;
         Object[] args = joinPoint.getArgs();

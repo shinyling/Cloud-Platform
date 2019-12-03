@@ -1,10 +1,7 @@
 package com.everwing.cloud.service.wy.web.rpc;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.everwing.cloud.service.wy.api.BuildingApi;
 import com.everwing.cloud.service.wy.biz.BuildingBiz;
-import com.everwing.cloud.service.wy.entity.Building;
-import com.everwing.cloud.service.wy.service.IBuildingService;
 import com.everwing.cloud.service.wy.vo.BuildingVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
