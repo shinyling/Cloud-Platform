@@ -1,12 +1,11 @@
 package com.everwing.cloud.service.wy.datasource;
 
-import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.MybatisConfiguration;
-import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
-import com.baomidou.mybatisplus.core.config.GlobalConfig;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.everwing.cloud.service.platform.vo.Company;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,21 +14,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.everwing.cloud.service.platform.api.CompanyApi;
+import com.everwing.cloud.service.platform.vo.Company;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author DELL shiny
  * @create 2019/5/10
  */
+@Slf4j
 @Component
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
@@ -43,7 +44,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     private String password;
 
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private CompanyApi companyApi;
 
     //保存动态创建的数据源
     private static final Map<String,DataSource> targetDataSource = new HashMap<>();
@@ -51,7 +52,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     //主数据库初始化
     @PostConstruct
     private void init() {
-        DataSource dataSource= (DataSource) DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
+        DataSource dataSource= DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
                 .driverClassName(driver)
                 .url(url)
                 .username(username)
@@ -113,19 +114,11 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         // 先切换回主库
         DataBaseContextHolder.setCompanyId(DataSourceUtil.DEFAULT);
         // 查询所需信息
-        List<Company> companyList= (List<Company>) redisTemplate.opsForValue().get("dataSource");
-        if(CollectionUtil.isEmpty(companyList)){
-            throw new RuntimeException("未查询到公司信息,初始化失败!");
-        }
-        Map<String,Company> companyMap=companyList.stream().collect(Collectors.toMap(Company::getCompanyId,a -> a,(k1,k2)->k1));
-        Company database = companyMap.get(dbname);
-        if(database==null){
-            database=companyList.get(0);
-        }
+        Company database = companyApi.query(dbname);
         // 切换回目标库
         oriSource=StringUtils.defaultIfBlank(oriSource,database.getCompanyId());
         DataBaseContextHolder.setCompanyId(oriSource);
-        DataSource dataSource = (DataSource)DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
+        DataSource dataSource = DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
                 .driverClassName(this.driver)
                 .url(database.getJdbcUrl())
                 .username(database.getJdbcUsername())

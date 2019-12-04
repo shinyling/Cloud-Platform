@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("com.everwing.cloud.service.wy.mapper")
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.everwing.cloud.service.platform")
 public class WyServiceApplication {
 
     public static void main(String[] args) {

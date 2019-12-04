@@ -1,6 +1,7 @@
 package com.everwing.cloud.service.wy.web.fronted;
 
 import com.everwing.cloud.common.entity.ResultJson;
+import com.everwing.cloud.service.platform.api.CompanyApi;
 import com.everwing.cloud.service.wy.biz.BuildingBiz;
 import com.everwing.cloud.service.wy.vo.BuildingVo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,7 @@ package com.everwing.cloud.service.platform.api;
 
 import com.everwing.cloud.service.platform.vo.Company;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -11,16 +10,16 @@ import java.util.List;
  * @author DELL shiny
  * @create 2019/5/9
  */
-@FeignClient("cloud-provider-platform")
+@FeignClient("platform")
 public interface CompanyApi {
 
-    @GetMapping("list")
+    @RequestMapping(value = "/company/list",method = RequestMethod.GET)
     List<Company> list();
 
-    @GetMapping("query")
+    @RequestMapping(value = "/company/query",method = RequestMethod.GET)
     Company query(String companyId);
 
-    @PostMapping("insert")
-    Company insert(Company company);
+    @RequestMapping(value = "/company/insert",method = RequestMethod.POST)
+    Company insert(@RequestBody Company company);
 
 }

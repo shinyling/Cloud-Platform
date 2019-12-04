@@ -21,11 +21,11 @@ zuul:
   routes:
     wy:
       path: /wy/**
-      serviceId: wy-web
+      serviceId: wy-service
       sensitive-headers:
     platform:
       path: /platform/**
-      service-id: platform-web
+      service-id: platform
       sensitive-headers:
     admin:
       path: /admin/**
