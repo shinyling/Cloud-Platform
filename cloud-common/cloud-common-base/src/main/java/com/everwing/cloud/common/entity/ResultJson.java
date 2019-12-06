@@ -33,6 +33,11 @@ public class ResultJson<T> {
         this.data=t;
     }
 
+    public ResultJson(ErrorCodeEnum codeEnum, String msg) {
+        this.code=codeEnum.getCode();
+        this.message=msg;
+    }
+
     public static ResultJson success(Object t){
         return new ResultJson(t);
     }
@@ -40,6 +45,11 @@ public class ResultJson<T> {
     public static ResultJson fail(){
         return new ResultJson(ErrorCodeEnum.FAIL);
     }
+
+    public static ResultJson fail(String msg){
+        return new ResultJson(ErrorCodeEnum.FAIL,msg);
+    }
+
 
     public static ResultJson noContent(){
         return new ResultJson(ErrorCodeEnum.NO_CONTENT);

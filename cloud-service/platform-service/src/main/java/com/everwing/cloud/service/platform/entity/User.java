@@ -1,6 +1,9 @@
 package com.everwing.cloud.service.platform.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.everwing.cloud.service.platform.vo.UserVo;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +12,7 @@ import java.time.LocalDateTime;
  * @create 2019/10/14
  */
 @Data
+@TableName("user")
 public class User {
 
     private String id;
@@ -36,5 +40,11 @@ public class User {
     private String companyId;
 
     private Boolean type;
+
+    public UserVo convertToUserVo(){
+        UserVo userVo=new UserVo();
+        BeanUtils.copyProperties(this,userVo);
+        return userVo;
+    }
 
 }

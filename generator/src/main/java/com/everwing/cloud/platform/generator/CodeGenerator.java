@@ -23,24 +23,24 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = "E:/lingxin/git-repo/Cloud-Platform/generator";
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("generator");
+        gc.setAuthor("shiny");
         gc.setOpen(false);
         gc.setSwagger2(false);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://10.1.20.11:3306/wypt");
+        dsc.setUrl("jdbc:mysql://10.1.5.68:3306/ucenter?serverTimezone=UTC");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("m123");
+        dsc.setPassword("shiny");
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName("");
-        pc.setParent("com.everwing.coreservice.wy.charge");
+        pc.setParent("com.everwing.cloud.service.platform");
         mpg.setPackageInfo(pc);
 
         // 如果模板引擎是 freemarker
@@ -79,8 +79,9 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude(new String[]{"t_jf_discount_building"});
-        strategy.setTablePrefix("t_jf");
+        strategy.setExclude(new String[]{"ClientDetails","oauth_access_token","oauth_approvals","oauth_client_details"
+                ,"oauth_client_token","oauth_code","oauth_refresh_token"});
+        strategy.setTablePrefix("");
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
