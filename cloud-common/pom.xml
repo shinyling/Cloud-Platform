@@ -15,6 +15,7 @@
     <modules>
         <module>cloud-common-base</module>
         <module>cloud-common-config</module>
+        <module>cloud-common-oauth</module>
     </modules>
 
     <dependencies>

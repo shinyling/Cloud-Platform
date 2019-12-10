@@ -1,4 +1,4 @@
-package com.everwing.cloud.service.wy.oauth;
+package com.everwing.cloud.oauth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
@@ -100,6 +100,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         CustomPrincipal customPrincipal = new CustomPrincipal();
         if( map.containsKey("principal") ) {
             Map<String, Object> principalMap = (Map<String, Object>) map.get("principal");
+            customPrincipal.setId((String) principalMap.get("id"));
             customPrincipal.setCompanyId((String) principalMap.get("companyId"));
             customPrincipal.setUsername((String)principalMap.get("username"));
         }

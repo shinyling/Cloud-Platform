@@ -1,8 +1,7 @@
 package com.everwing.cloud.service.wy.config;
 
-import com.everwing.cloud.service.wy.oauth.CustomUserInfoTokenServices;
+import com.everwing.cloud.oauth.CustomUserInfoTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

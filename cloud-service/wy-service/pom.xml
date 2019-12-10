@@ -57,12 +57,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>2.1.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
             <exclusions>
@@ -75,6 +69,11 @@
         <dependency>
             <groupId>com.everwing.cloud</groupId>
             <artifactId>platform-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.everwing</groupId>
+            <artifactId>cloud-common-oauth</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

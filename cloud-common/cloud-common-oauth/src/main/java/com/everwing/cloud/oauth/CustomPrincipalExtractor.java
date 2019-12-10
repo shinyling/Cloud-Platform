@@ -1,4 +1,4 @@
-package com.everwing.cloud.service.wy.oauth;
+package com.everwing.cloud.oauth;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;

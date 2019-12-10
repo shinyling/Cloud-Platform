@@ -3,9 +3,7 @@ package com.everwing.cloud.service.platform.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import com.everwing.cloud.service.platform.vo.CompanyVo;
 import lombok.Data;
@@ -29,6 +27,7 @@ public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.ID_WORKER_STR)
     private String companyId;
 
     private String jdbcUrl;

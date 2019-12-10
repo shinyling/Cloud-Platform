@@ -1,5 +1,9 @@
 package com.everwing.cloud.service.platform.config;
 
+import com.everwing.cloud.oauth.CustomUserInfoTokenServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -14,10 +18,14 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+    @Autowired
+    private ResourceServerProperties sso;
+
     private static final String RESOURCE_ID="platform-resource";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        resources.tokenServices(customUserInfoTokenServices());
         resources.resourceId(RESOURCE_ID).stateless(true);
     }
 
@@ -29,5 +37,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/swagger-resources","/swagger-resources/configuration/security",
                         "/swagger-ui.html","/course/coursebase/**").permitAll()
                 .anyRequest().authenticated();
+    }
+
+    @Bean
+    public CustomUserInfoTokenServices customUserInfoTokenServices(){
+        return new CustomUserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());
     }
 }

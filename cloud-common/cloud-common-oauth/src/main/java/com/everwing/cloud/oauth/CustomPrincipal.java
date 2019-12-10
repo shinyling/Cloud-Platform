@@ -1,4 +1,4 @@
-package com.everwing.cloud.service.wy.oauth;
+package com.everwing.cloud.oauth;
 
 import lombok.Data;
 
@@ -8,6 +8,8 @@ import lombok.Data;
  */
 @Data
 public class CustomPrincipal {
+
+    private String id;
 
     private String companyId;
 
