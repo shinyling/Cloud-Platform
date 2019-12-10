@@ -1,9 +1,10 @@
 package com.everwing.cloud.service.platform.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.everwing.cloud.service.platform.vo.Company;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.everwing.cloud.service.platform.entity.Company;
 
 /**
  * <p>

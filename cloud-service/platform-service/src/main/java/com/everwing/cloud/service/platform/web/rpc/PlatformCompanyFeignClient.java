@@ -2,7 +2,7 @@ package com.everwing.cloud.service.platform.web.rpc;
 
 import com.everwing.cloud.service.platform.api.CompanyApi;
 import com.everwing.cloud.service.platform.biz.CompanyBiz;
-import com.everwing.cloud.service.platform.vo.Company;
+import com.everwing.cloud.service.platform.vo.CompanyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
@@ -23,19 +23,19 @@ public class PlatformCompanyFeignClient implements CompanyApi {
 
     @Override
     @GetMapping("list")
-    public List<Company> list() {
+    public List<CompanyVo> list() {
         return companyBiz.listAll();
     }
 
     @Override
     @GetMapping("query")
-    public Company query(String companyId) {
+    public CompanyVo query(String companyId) {
         return companyBiz.selectById(companyId);
     }
 
     @Override
     @PostMapping("insert")
-    public Company insert(@RequestBody Company company) {
+    public CompanyVo insert(@RequestBody CompanyVo company) {
         return companyBiz.add(company);
     }
 }

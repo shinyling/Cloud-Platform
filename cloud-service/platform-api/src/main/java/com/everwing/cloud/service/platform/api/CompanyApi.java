@@ -1,6 +1,6 @@
 package com.everwing.cloud.service.platform.api;
 
-import com.everwing.cloud.service.platform.vo.Company;
+import com.everwing.cloud.service.platform.vo.CompanyVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +14,12 @@ import java.util.List;
 public interface CompanyApi {
 
     @RequestMapping(value = "/company/list",method = RequestMethod.GET)
-    List<Company> list();
+    List<CompanyVo> list();
 
     @RequestMapping(value = "/company/query",method = RequestMethod.GET)
-    Company query(String companyId);
+    CompanyVo query(String companyId);
 
     @RequestMapping(value = "/company/insert",method = RequestMethod.POST)
-    Company insert(@RequestBody Company company);
+    CompanyVo insert(@RequestBody CompanyVo company);
 
 }

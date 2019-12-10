@@ -3,6 +3,7 @@ package com.everwing.cloud.service.platform.vo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Company implements Serializable {
+public class CompanyVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,10 +29,12 @@ public class Company implements Serializable {
 
     private String jdbcPassword;
 
+    @NotNull(message="公司名称不能为空")
     private String companyName;
 
     private String companyLocation;
 
+    @NotNull(message="公司地址不能为空")
     private String companyAddress;
 
     private String state;
@@ -43,4 +46,5 @@ public class Company implements Serializable {
     private String updateBy;
 
     private LocalDateTime updateTime;
+
 }

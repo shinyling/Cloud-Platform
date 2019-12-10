@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import com.everwing.cloud.service.platform.vo.CompanyVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
 
 /**
  * <p>
@@ -64,4 +66,15 @@ public class Company implements Serializable {
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
+    public static Company convertFromVo(CompanyVo companyVo){
+        Company company=new Company();
+        BeanUtils.copyProperties(companyVo,company);
+        return company;
+    }
+
+    public CompanyVo convertToVo(){
+        CompanyVo companyVo=new CompanyVo();
+        BeanUtils.copyProperties(this,companyVo);
+        return companyVo;
+    }
 }

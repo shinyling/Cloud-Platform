@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import com.everwing.cloud.service.platform.vo.CompanyVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,7 +23,6 @@ import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.everwing.cloud.service.platform.api.CompanyApi;
-import com.everwing.cloud.service.platform.vo.Company;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -114,7 +114,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         // 先切换回主库
         DataBaseContextHolder.setCompanyId(DataSourceUtil.DEFAULT);
         // 查询所需信息
-        Company database = companyApi.query(dbname);
+        CompanyVo database = companyApi.query(dbname);
         // 切换回目标库
         oriSource=StringUtils.defaultIfBlank(oriSource,database.getCompanyId());
         DataBaseContextHolder.setCompanyId(oriSource);
