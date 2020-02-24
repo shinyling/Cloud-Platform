@@ -8,6 +8,11 @@ spring:
     url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC
     username: root
     password: shiny
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+      exclude: WEB-INF/**
 security:
   oauth2:
     resource:

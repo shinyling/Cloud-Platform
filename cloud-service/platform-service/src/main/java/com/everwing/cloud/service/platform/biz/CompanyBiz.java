@@ -1,5 +1,6 @@
 package com.everwing.cloud.service.platform.biz;
 
+import com.everwing.cloud.common.exception.BusinessException;
 import com.everwing.cloud.service.platform.entity.Company;
 import com.everwing.cloud.service.platform.service.ICompanyService;
 import com.everwing.cloud.service.platform.vo.CompanyVo;
@@ -34,5 +35,14 @@ public class CompanyBiz {
             return companyVo;
         }
         return null;
+    }
+
+    public void audit(CompanyVo companyVo) throws BusinessException {
+        Company company=Company.convertFromVo(companyVo);
+        boolean flag=companyService.updateById(company);
+        if(!flag){
+            throw new BusinessException("审核公司失败!");
+        }
+        //todo 发送消息创建数据库
     }
 }
