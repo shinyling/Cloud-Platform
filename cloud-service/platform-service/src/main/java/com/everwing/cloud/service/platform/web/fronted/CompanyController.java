@@ -15,8 +15,6 @@ import com.everwing.cloud.service.platform.biz.CompanyBiz;
 import com.everwing.cloud.service.platform.vo.CompanyVo;
 import com.everwing.cloud.service.platform.group.*;
 
-import cn.hutool.core.lang.Assert;
-
 /**
  * @author DELL shiny
  * @create 2019/12/10
@@ -31,9 +29,12 @@ public class CompanyController {
 
     @ApiOperation("注册公司")
     @PostMapping("register")
-    public ResultJson register(@RequestBody @Validated(AddGroup.class) CompanyVo companyVo){
-        companyVo=companyBiz.add(companyVo);
-        Assert.notNull(companyVo,"新公司注册失败!");
+    public ResultJson register(@RequestBody @Validated(AddGroup.class) CompanyVo companyVo) {
+        try {
+            companyVo=companyBiz.add(companyVo);
+        } catch (BusinessException e) {
+            return ResultJson.fail(e.getMessage());
+        }
         return ResultJson.success(companyVo);
     }
 

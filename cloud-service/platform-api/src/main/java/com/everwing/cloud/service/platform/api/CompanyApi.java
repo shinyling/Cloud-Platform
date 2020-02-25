@@ -19,7 +19,4 @@ public interface CompanyApi {
     @RequestMapping(value = "/company/query",method = RequestMethod.GET)
     CompanyVo query(String companyId);
 
-    @RequestMapping(value = "/company/insert",method = RequestMethod.POST)
-    CompanyVo insert(@RequestBody CompanyVo company);
-
 }

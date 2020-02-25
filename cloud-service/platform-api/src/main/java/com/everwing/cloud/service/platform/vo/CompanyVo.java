@@ -39,6 +39,7 @@ public class CompanyVo implements Serializable {
     @NotNull(message="公司地址不能为空",groups = AddGroup.class)
     private String companyAddress;
 
+    @NotNull(message="审核状态不能为空",groups = AuditCompanyGroup.class)
     private String state;
 
     private String createBy;
@@ -48,8 +49,5 @@ public class CompanyVo implements Serializable {
     private String updateBy;
 
     private LocalDateTime updateTime;
-
-    @NotNull(message="审核状态不能为空",groups = AuditCompanyGroup.class)
-    private Boolean audit;
 
 }
