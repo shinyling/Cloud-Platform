@@ -21,7 +21,7 @@ spring:
           content-type: application/json
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC
+    url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC&allowMultiQueries=true
     username: root
     password: shiny
   devtools:
@@ -45,6 +45,7 @@ logging:
   level:
     root: debug
     com.alibaba.nacos.client.naming: error
+    com.zaxxer.hikari.pool.HikariPool: info
   config: classpath:logback-spring-${spring.profiles.active}.xml
 management:
   endpoints:

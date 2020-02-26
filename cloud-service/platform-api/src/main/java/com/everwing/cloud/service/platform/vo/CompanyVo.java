@@ -50,4 +50,6 @@ public class CompanyVo implements Serializable {
 
     private LocalDateTime updateTime;
 
+    private String schemeName;
+
 }

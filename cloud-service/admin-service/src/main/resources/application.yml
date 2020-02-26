@@ -1,4 +1,9 @@
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC&&allowMultiQueries=true
+    username: root
+    password: shiny
   cloud:
     nacos:
       discovery:
@@ -34,4 +39,12 @@ logging:
   level:
     root: debug
     com.alibaba.nacos.client.naming: error
+    com.zaxxer.hikari.pool.HikariPool: info
   config: classpath:logback-spring-${spring.profiles.active}.xml
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:/com/everwing/cloud/service/admin/mapper/xml/*.xml
+  global-config:
+    # 热加载mapper文件
+    refresh: true
