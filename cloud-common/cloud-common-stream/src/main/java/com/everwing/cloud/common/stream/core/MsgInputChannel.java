@@ -10,6 +10,6 @@ import org.springframework.messaging.SubscribableChannel;
  */
 public interface MsgInputChannel {
 
-    @Input(ChannelName.COMPANY)
+    @Input(ChannelName.COMPANY_RECEIVE)
     SubscribableChannel addCompany();
 }

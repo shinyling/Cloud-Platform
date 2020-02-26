@@ -9,6 +9,8 @@ package com.everwing.cloud.common.stream.channel;
  */
 public interface ChannelName {
 
-    String COMPANY="company";
+    String COMPANY_SEND="companySend";
+
+    String COMPANY_RECEIVE="companyReceive";
 
 }

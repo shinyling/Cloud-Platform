@@ -5,7 +5,7 @@ spring:
         server-addr: 127.0.0.1:8848
     stream:
       binders:
-        everwing:
+        defaultRabbit:
           type: rabbit
           environment:                                      #配置rabbimq连接环境
             spring:
@@ -15,15 +15,21 @@ spring:
                 password: monkong
                 virtual-host: /vh
       bindings:
-        input:                                             #消费者绑定 这个是接受消息通道的名称
+        companyReceive:                                     #消费者绑定 这个是接受消息通道的名称
           group: company                                    #持久化, 也就是指定队列名称，等同于rabbitmq中的 queue, 同一个服务不同的实例，使用相同的队列名称，处理消息
           destination: exchange-cloud                     #和生产者的消息交换机要相同
-          binder:
-            name: everwing
           content-type: application/json
           consumer:
             max-attempts: 3                                 # The number of attempts to process the message (including the first) in the event of processing failures,Default: 3
             concurrency: 1                                  # The concurrency setting of the consumer. Default: 1.
+      rabbit:
+        bindings:
+          companyReceive:
+            consumer:
+              max-concurrency: 4                            # maxumum concurrency of this consumer (threads)
+              prefetch: 5                                   # number of prefetched messages pre consumer thread
+              requeue-rejected: false                       # true to requeue rejected messages, false to discard (or route to DLQ)
+              republish-to-dlq: true                        # republish failures to the DLQ with diagnostic headers
 logging:
   level:
     root: debug

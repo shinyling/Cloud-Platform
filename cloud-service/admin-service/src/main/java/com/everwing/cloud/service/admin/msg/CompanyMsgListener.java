@@ -5,6 +5,7 @@ import com.everwing.cloud.common.stream.core.MsgInputChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.Message;
 
 /**
  * @author DELL shiny
@@ -14,8 +15,8 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 @EnableBinding(MsgInputChannel.class)
 public class CompanyMsgListener {
 
-    @StreamListener(target = ChannelName.COMPANY)
-    public void listenCompany(String msg){
-        log.info("收到消息[{}]",msg);
+    @StreamListener(target = ChannelName.COMPANY_RECEIVE)
+    public void listenCompany(Message<String> message){
+        log.info("收到消息[{}]",message.getPayload());
     }
 }

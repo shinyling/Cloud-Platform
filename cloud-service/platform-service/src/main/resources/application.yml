@@ -5,7 +5,7 @@ spring:
         server-addr: 127.0.0.1:8848
     stream:
       binders:
-        everwing:
+        defaultRabbit:
           type: rabbit
           environment:                                      #配置rabbimq连接环境
             spring:
@@ -15,12 +15,10 @@ spring:
                 password: monkong
                 virtual-host: /vh
       bindings:
-        company:                                          #生产者绑定，这个是消息通道的名称
+        companySend:                                          #生产者绑定，这个是消息通道的名称
           destination: exchange-cloud                     #exchange名称，交换模式默认是topic
           group: company
           content-type: application/json
-          binder:
-            name: everwing
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC

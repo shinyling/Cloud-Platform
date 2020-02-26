@@ -13,7 +13,7 @@ import org.springframework.messaging.MessageChannel;
  */
 public interface SendOutputChannel {
 
-    @Output(ChannelName.COMPANY)
+    @Output(ChannelName.COMPANY_SEND)
     MessageChannel companySender();
 
 }
