@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -54,9 +55,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     DataSource dataSource;
 
+    @Value("${token.invalid}")
+    private Integer invalidSecond;
+
     @Bean // 声明TokenStore实现
     public TokenStore tokenStore() {
-        return new RedisTokenStore(redisConnectionFactory);
+        CustomTokenStore customTokenStore=new CustomTokenStore(redisConnectionFactory,clientDetails(),invalidSecond);
+        customTokenStore.setPrefix("user-token:");
+        return customTokenStore;
     }
 
     @Bean // 声明 ClientDetails实现

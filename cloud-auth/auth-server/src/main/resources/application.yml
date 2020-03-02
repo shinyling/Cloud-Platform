@@ -38,3 +38,5 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+token:
+  invalid: 360
