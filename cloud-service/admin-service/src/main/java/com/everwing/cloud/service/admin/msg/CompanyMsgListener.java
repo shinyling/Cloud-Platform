@@ -27,6 +27,7 @@ public class CompanyMsgListener {
     @StreamListener(target = ChannelName.COMPANY_RECEIVE)
     public void listenCompany(Message<String> message){
         try {
+            //todo 校验接收的数据是否重复
             String msg=message.getPayload();
             CompanyVo companyVo= JSON.parseObject(msg,CompanyVo.class);
             log.info("收到消息[{}]",companyVo);

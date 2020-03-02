@@ -17,9 +17,9 @@ spring:
         server-addr: 127.0.0.1:8848
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.1.20.11:3306/wypt
-    username: root
-    password: JJ_passwd@2017
+    url: jdbc:mysql://10.1.5.68:3306/tenant_1232590503343169536?useUnicode=true&serverTimezone=UTC&allowMultiQueries=true
+    username: xqvm5b
+    password: Py4328djg*
 security:
   oauth2:
     resource:
@@ -34,8 +34,9 @@ security:
       scope: app
 logging:
   level:
-    root: info
-    com.everwing.cloud.service.wy.mapper: debug
+    root: debug
+    com.alibaba.nacos.client.naming: error
+    com.zaxxer.hikari.pool.HikariPool: info
   config: classpath:logback-spring-${spring.profiles.active}.xml
 management:
   endpoints:
@@ -49,3 +50,6 @@ management:
       show-details: ALWAYS
 mybatis-plus:
   mapper-locations: classpath:com/everwing/cloud/service/wy/mapper/xml
+feign:
+  httpclient:
+    enabled: true

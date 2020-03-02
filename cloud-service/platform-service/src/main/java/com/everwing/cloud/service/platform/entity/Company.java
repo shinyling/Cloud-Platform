@@ -71,9 +71,12 @@ public class Company implements Serializable {
         return company;
     }
 
-    public CompanyVo convertToVo(){
+    public static CompanyVo convertToVo(Company company){
+        if(null==company){
+            return null;
+        }
         CompanyVo companyVo=new CompanyVo();
-        BeanUtils.copyProperties(this,companyVo);
+        BeanUtils.copyProperties(company,companyVo);
         return companyVo;
     }
 }

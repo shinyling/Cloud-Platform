@@ -35,17 +35,20 @@ public class CompanyBiz {
     private String url;
 
     public List<CompanyVo> listAll(){
-        return companyService.list().stream().map(company -> company.convertToVo()).collect(Collectors.toList());
+        return companyService.list().stream().map(Company::convertToVo).collect(Collectors.toList());
     }
 
     public CompanyVo selectById(String companyId) {
-        return companyService.getById(companyId).convertToVo();
+        QueryWrapper<Company> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(Company::getCompanyId,companyId)
+                .eq(Company::getState,CompanyStateEnum.AUDIT_SUCCESS.getState());
+        return Company.convertToVo(companyService.getOne(queryWrapper));
     }
 
     public CompanyVo add(CompanyVo companyVo) throws BusinessException {
         Company company=Company.convertFromVo(companyVo);
-        QueryWrapper<Company> companyWrapper=new QueryWrapper();
-        companyWrapper.eq("company_name",company.getCompanyName());
+        QueryWrapper<Company> companyWrapper=new QueryWrapper<>();
+        companyWrapper.lambda().eq(Company::getCompanyName,company.getCompanyName());
         Company exists=companyService.getOne(companyWrapper);
         if(exists!=null){
             throw new BusinessException("公司名称已存在!");

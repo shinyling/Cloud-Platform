@@ -18,8 +18,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> implements IBuildingService {
 
-    @Override
-    public Building getOne(String companyId, QueryWrapper<Building> queryWrapper) {
-        return baseMapper.selectOne(queryWrapper);
-    }
 }

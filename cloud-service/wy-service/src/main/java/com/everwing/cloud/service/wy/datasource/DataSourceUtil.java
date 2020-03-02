@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DataSourceUtil {
 
-    public static final String DEFAULT = "09841dc0-204a-41f2-a175-20a6dcee0187";
+    public static final String DEFAULT = "1232590503586938882";
 
     private static final Map<String, String> dataSourceMap = new ConcurrentHashMap<>();
 

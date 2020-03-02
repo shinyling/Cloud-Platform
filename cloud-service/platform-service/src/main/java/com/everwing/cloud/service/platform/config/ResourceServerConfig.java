@@ -35,7 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/actuator","/actuator/*","/v2/api-docs", "/swagger-resources/configuration/ui",
                         "/swagger-resources","/swagger-resources/configuration/security",
-                        "/swagger-ui.html","/course/coursebase/**").permitAll()
+                        "/swagger-ui.html","/course/coursebase/**","/company/query").permitAll()
                 .anyRequest().authenticated();
     }
 

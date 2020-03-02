@@ -14,5 +14,4 @@ import com.everwing.cloud.service.wy.entity.Building;
  */
 public interface IBuildingService extends IService<Building> {
 
-    Building getOne(String companyId, QueryWrapper<Building> queryWrapper);
 }

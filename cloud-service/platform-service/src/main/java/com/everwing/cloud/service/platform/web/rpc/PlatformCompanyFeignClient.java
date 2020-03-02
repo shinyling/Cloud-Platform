@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,13 +27,13 @@ public class PlatformCompanyFeignClient implements CompanyApi {
 
     @ApiOperation("列出所有公司")
     @Override
-    @GetMapping("list")
+    @RequestMapping(value = "list",method = RequestMethod.GET)
     public List<CompanyVo> list() {
         return companyBiz.listAll();
     }
 
     @Override
-    @GetMapping("query")
+    @RequestMapping(value = "query",method = RequestMethod.GET)
     public CompanyVo query(String companyId) {
         return companyBiz.selectById(companyId);
     }

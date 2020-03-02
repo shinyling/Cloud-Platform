@@ -6,7 +6,7 @@ import com.everwing.cloud.service.platform.vo.CompanyVo;
  * @author DELL
  * @title: SchemeMapper
  * @projectName cloud-platform
- * @description: TODO
+ * @description: 公司创建初始化
  * @date 2020/2/26 9:39
  */
 public interface SchemeMapper {
@@ -18,7 +18,15 @@ public interface SchemeMapper {
      */
     void addScheme(CompanyVo companyVo);
 
+    /**
+     * 建表
+     * @param companyVo
+     */
     void createTables(CompanyVo companyVo);
 
+    /**
+     * 初始化数据
+     * @param companyVo
+     */
     void insertData(CompanyVo companyVo);
 }

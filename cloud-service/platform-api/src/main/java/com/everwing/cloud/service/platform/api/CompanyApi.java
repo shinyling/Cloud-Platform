@@ -17,6 +17,6 @@ public interface CompanyApi {
     List<CompanyVo> list();
 
     @RequestMapping(value = "/company/query",method = RequestMethod.GET)
-    CompanyVo query(String companyId);
+    CompanyVo query(@RequestParam("companyId") String companyId);
 
 }
