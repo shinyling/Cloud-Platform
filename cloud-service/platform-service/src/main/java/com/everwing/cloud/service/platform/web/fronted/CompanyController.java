@@ -1,5 +1,7 @@
 package com.everwing.cloud.service.platform.web.fronted;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.exception.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,11 +17,13 @@ import com.everwing.cloud.service.platform.biz.CompanyBiz;
 import com.everwing.cloud.service.platform.vo.CompanyVo;
 import com.everwing.cloud.service.platform.group.*;
 
+import java.util.Map;
+
 /**
  * @author DELL shiny
  * @create 2019/12/10
  */
-@Api("公司操作相关")
+@Api(value = "公司操作相关",tags = "公司操作相关")
 @RestController
 @RequestMapping("company")
 public class CompanyController {
@@ -47,5 +51,12 @@ public class CompanyController {
             return ResultJson.fail("审核失败!");
         }
         return ResultJson.success("审核成功!");
+    }
+
+    @ApiOperation(value = "列出所有租户")
+    @PostMapping("list")
+    public ResultJson list(Page page){
+        IPage<Map<String,Object>> pageMap = companyBiz.listNames(page);
+        return ResultJson.success(pageMap);
     }
 }

@@ -32,9 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/oauth/*")
                 .and()
                 .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll();
+                .antMatchers("/login")
+                .permitAll()
+                .anyRequest().authenticated();
+        http.formLogin().loginPage("/login");
     }
 
     @Override

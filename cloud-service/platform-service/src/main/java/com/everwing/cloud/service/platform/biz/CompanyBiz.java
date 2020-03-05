@@ -3,7 +3,10 @@ package com.everwing.cloud.service.platform.biz;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.exception.BusinessException;
 import com.everwing.cloud.service.platform.constant.CompanyStateEnum;
 import com.everwing.cloud.service.platform.entity.Company;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -87,5 +91,12 @@ public class CompanyBiz {
         }else {
             throw new BusinessException("公司状态错误，操作失败!");
         }
+    }
+
+    public IPage<Map<String, Object>> listNames(Page page){
+        LambdaQueryWrapper<Company> companyLambdaQueryWrapper=new LambdaQueryWrapper<>();
+        companyLambdaQueryWrapper.select(Company::getCompanyId,Company::getCompanyAddress,Company::getCompanyLocation,Company::getCompanyName,Company::getState);
+        IPage<Map<String,Object>> pageMap= companyService.pageMaps(page,companyLambdaQueryWrapper);
+        return pageMap;
     }
 }

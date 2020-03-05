@@ -13,10 +13,10 @@ import java.util.List;
 @FeignClient("platform")
 public interface CompanyApi {
 
-    @RequestMapping(value = "/company/list",method = RequestMethod.GET)
+    @RequestMapping(value = "/rpc/company/list",method = RequestMethod.GET)
     List<CompanyVo> list();
 
-    @RequestMapping(value = "/company/query",method = RequestMethod.GET)
+    @RequestMapping(value = "/rpc/company/query",method = RequestMethod.GET)
     CompanyVo query(@RequestParam("companyId") String companyId);
 
 }

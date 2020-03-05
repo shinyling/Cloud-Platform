@@ -16,16 +16,14 @@ import java.util.List;
  * @author DELL shiny
  * @create 2019/10/16
  */
-@Api("公司远程调用controller")
 @RefreshScope
 @RestController
-@RequestMapping("company")
+@RequestMapping("rpc/company")
 public class PlatformCompanyFeignClient implements CompanyApi {
 
     @Autowired
     private CompanyBiz companyBiz;
 
-    @ApiOperation("列出所有公司")
     @Override
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public List<CompanyVo> list() {
