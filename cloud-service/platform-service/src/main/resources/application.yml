@@ -29,6 +29,8 @@ spring:
       enabled: true  #设置开启热部署
       additional-paths: src/main/java #重启目录
       exclude: WEB-INF/**
+  aop:
+    auto: true
 security:
   oauth2:
     resource:
