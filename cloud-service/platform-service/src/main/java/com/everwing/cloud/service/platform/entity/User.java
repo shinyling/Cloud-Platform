@@ -1,5 +1,6 @@
 package com.everwing.cloud.service.platform.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.everwing.cloud.service.platform.vo.UserVo;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class User {
 
     private Boolean isLock;
 
+    @TableLogic(value = "false", delval = "true")
     private Boolean isDelete;
 
     private LocalDateTime createTime;
@@ -41,9 +43,9 @@ public class User {
 
     private Boolean type;
 
-    public UserVo convertToUserVo(){
-        UserVo userVo=new UserVo();
-        BeanUtils.copyProperties(this,userVo);
+    public UserVo convertToUserVo() {
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(this, userVo);
         return userVo;
     }
 

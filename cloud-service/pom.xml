@@ -9,6 +9,7 @@
         <module>wy-api</module>
         <module>wy-service</module>
         <module>admin-service</module>
+        <module>search-service</module>
     </modules>
     <parent>
         <groupId>com.everwing</groupId>

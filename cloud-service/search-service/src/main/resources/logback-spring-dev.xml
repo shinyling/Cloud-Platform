@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 引入配置文件中的变量 logback.properties 定义了一个值log_path-->
+<!--    <property resource="logback.properties" />-->
+
+    <!-- 自己声明一个变量 -->
+     <property name="log_path" value="D:\output" />
+
+
+    <!-- 控制台输出 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <root level="DEBUG">
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>

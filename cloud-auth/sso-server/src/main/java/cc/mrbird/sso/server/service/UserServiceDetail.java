@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +23,20 @@ public class UserServiceDetail implements UserDetailsService {
     private UserDao userDao;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = userDao.findByName(username);
         Role role = new Role();
         role.setName("ROLE_USER");
         List<Role> authorities = new ArrayList<>();
         authorities.add(role);
-        user.setAuthorities(authorities);
-
-        if(user==null) {
+        if (!authorities.isEmpty()) {
+            user.setAuthorities(authorities);
+        }
+        if (user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword()
-            ,user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),user.isAccountNonLocked(),
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword()
+                , user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(),
                 user.getAuthorities());
     }
 }

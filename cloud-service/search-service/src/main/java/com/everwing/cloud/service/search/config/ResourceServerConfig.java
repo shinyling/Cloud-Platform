@@ -1,6 +1,5 @@
-package com.everwing.cloud.service.platform.config;
+package com.everwing.cloud.service.search.config;
 
-import com.everwing.cloud.oauth.CustomUserInfoTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+
+import com.everwing.cloud.oauth.CustomUserInfoTokenServices;
 
 /**
  * @author DELL shiny
@@ -21,7 +22,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private ResourceServerProperties sso;
 
-    private static final String RESOURCE_ID="platform-resource";
+    private static final String RESOURCE_ID="search-resource";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -35,7 +36,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/actuator","/actuator/*","/v2/api-docs", "/swagger-resources/configuration/ui",
                         "/swagger-resources","/swagger-resources/configuration/security",
-                        "/swagger-ui.html","/course/coursebase/**","/company/query","/user/register").permitAll()
+                        "/swagger-ui.html","/course/coursebase/**").permitAll()
                 .anyRequest().authenticated();
     }
 

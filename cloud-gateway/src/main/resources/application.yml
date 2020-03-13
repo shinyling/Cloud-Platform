@@ -27,6 +27,10 @@ zuul:
       path: /platform/**
       service-id: platform
       sensitive-headers:
+    search:
+      path: /search/**
+      service-id: search
+      sensitive-headers:
     admin:
       path: /admin/**
       service_id: admin-web

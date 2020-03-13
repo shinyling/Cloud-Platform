@@ -1,16 +1,14 @@
 package com.everwing.cloud.service.platform.handler;
 
-import java.time.LocalDateTime;
-
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.everwing.cloud.common.vo.UserVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.everwing.cloud.common.vo.UserVo;
-
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
 
 /**
  * @author DELL shiny
@@ -21,15 +19,27 @@ import lombok.extern.slf4j.Slf4j;
 public class MpObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
-        UserVo userVo = JSON.parseObject(JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal()),UserVo.class);
-        this.setFieldValByName("createBy",userVo.getId(),metaObject);
-        this.setFieldValByName("createTime", LocalDateTime.now(),metaObject);
+        String userString=JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if(userString.startsWith("{")) {
+            UserVo userVo = JSON.parseObject(userString, UserVo.class);
+            checkAndSet("createBy",userVo.getUsername(),metaObject);
+        }
+        checkAndSet("createTime", LocalDateTime.now(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        UserVo userVo = JSON.parseObject(JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal()),UserVo.class);
-        this.setFieldValByName("updateBy", userVo.getId(),metaObject);
-        this.setFieldValByName("updateTime", LocalDateTime.now(),metaObject);
+        String userString=JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if(userString.startsWith("{")) {
+            UserVo userVo = JSON.parseObject(userString, UserVo.class);
+            checkAndSet("updateBy", userVo.getId(), metaObject);
+        }
+        checkAndSet("updateTime", LocalDateTime.now(), metaObject);
+    }
+
+    private void checkAndSet(String fieldName,Object value,MetaObject source){
+        if(source.hasSetter(fieldName)){
+            this.setFieldValByName(fieldName,value,source);
+        }
     }
 }

@@ -44,9 +44,7 @@ public class HikariConfig {
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setCacheEnabled(false);
         sqlSessionFactory.setConfiguration(configuration);
-        sqlSessionFactory.setPlugins(new Interceptor[]{ // PerformanceInterceptor(),OptimisticLockerInterceptor()
-                paginationInterceptor() // 添加分页功能
-        });
+        sqlSessionFactory.setPlugins(new Interceptor[]{ paginationInterceptor()});
         return sqlSessionFactory.getObject();
     }
 }
