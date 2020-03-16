@@ -2,6 +2,7 @@ package com.everwing.cloud.service.platform.biz;
 
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.service.platform.entity.UserGroup;
+import com.everwing.cloud.service.platform.param.PagedParam;
 import com.everwing.cloud.service.platform.service.IUserGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,9 @@ public class UserGroupBiz {
             return ResultJson.successWithMsg("删除用户组成功!");
         }
         return ResultJson.fail("删除用户组失败!");
+    }
+
+    public ResultJson loadPage(PagedParam<UserGroup> pagedParam) {
+        return ResultJson.success(userGroupService.page(pagedParam.getPage()));
     }
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author shiny
  * @date 2019-12-05
  */
-@Api(value = "角色", tags = "角色相关操作")
+@Api(value = "角色", tags = "角色")
 @RestController
 @RequestMapping("/role")
 public class RoleController {

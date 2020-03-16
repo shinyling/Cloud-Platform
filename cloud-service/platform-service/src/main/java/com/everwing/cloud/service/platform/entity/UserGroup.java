@@ -7,8 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -28,6 +29,7 @@ public class UserGroup implements Serializable {
 
     private String id;
 
+    @NotNull(message = "组名称不能为空")
     private String name;
 
     private String pid;
@@ -36,11 +38,11 @@ public class UserGroup implements Serializable {
     private String createBy;
 
     @TableField(fill = FieldFill.INSERT)
-    private Date creatTime;
+    private LocalDateTime createTime;
 
     @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     @TableField(fill = FieldFill.UPDATE)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 }

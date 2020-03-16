@@ -1,21 +1,18 @@
 package com.everwing.cloud.service.platform.web.fronted;
 
 
-import cn.hutool.core.lang.Assert;
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.service.platform.anno.SysLog;
 import com.everwing.cloud.service.platform.biz.UserGroupBiz;
 import com.everwing.cloud.service.platform.entity.UserGroup;
+import com.everwing.cloud.service.platform.param.PagedParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * <p>
- * 前端控制器
- * </p>
- *
  * @author shiny
  * @since 2019-12-05
  */
@@ -38,8 +35,16 @@ public class UserGroupController {
     @GetMapping("delete/{id}")
     @SysLog("删除用户组")
     public ResultJson delete(@PathVariable String id) {
-        Assert.notBlank(id, "参数错误!");
+        Assert.state(id != null, "参数错误!");
         return userGroupBiz.removeById(id);
+    }
+
+    @ApiOperation("加载用户组列表")
+    @PostMapping("loadPage")
+    @SysLog("加载用户组列表")
+    public ResultJson loadPage(@RequestBody PagedParam<UserGroup> pagedParam) {
+        Assert.state(pagedParam.getPage() != null, "分页参数错误!");
+        return userGroupBiz.loadPage(pagedParam);
     }
 
 }

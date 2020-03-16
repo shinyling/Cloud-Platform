@@ -1,12 +1,12 @@
 package com.everwing.cloud.platform.generator;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 代码生成
@@ -79,8 +79,7 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setExclude(new String[]{"ClientDetails","oauth_access_token","oauth_approvals","oauth_client_details"
-                ,"oauth_client_token","oauth_code","oauth_refresh_token"});
+        strategy.setInclude("user_group_user", "user_group_permission");
         strategy.setTablePrefix("");
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
