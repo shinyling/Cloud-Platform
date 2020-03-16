@@ -29,8 +29,9 @@ spring:
       enabled: true  #设置开启热部署
       additional-paths: src/main/java #重启目录
       exclude: WEB-INF/**
-  aop:
-    auto: true
+  flyway:
+    locations: classpath:/db
+    baseline-on-migrate: true
 security:
   oauth2:
     resource:

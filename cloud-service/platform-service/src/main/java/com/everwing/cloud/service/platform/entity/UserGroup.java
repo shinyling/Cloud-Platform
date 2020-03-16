@@ -1,14 +1,18 @@
 package com.everwing.cloud.service.platform.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author shiny
@@ -28,5 +32,15 @@ public class UserGroup implements Serializable {
 
     private String pid;
 
+    @TableField(fill = FieldFill.INSERT)
+    private String createBy;
 
+    @TableField(fill = FieldFill.INSERT)
+    private Date creatTime;
+
+    @TableField(fill = FieldFill.UPDATE)
+    private String updateBy;
+
+    @TableField(fill = FieldFill.UPDATE)
+    private Date updateTime;
 }
