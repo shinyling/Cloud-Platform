@@ -19,27 +19,27 @@ import java.time.LocalDateTime;
 public class MpObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
-        String userString=JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        if(userString.startsWith("{")) {
+        String userString = JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if (userString.startsWith("{")) {
             UserVo userVo = JSON.parseObject(userString, UserVo.class);
-            checkAndSet("createBy",userVo.getUsername(),metaObject);
+            checkAndSet("createBy", userVo.getUsername(), metaObject);
         }
         checkAndSet("createTime", LocalDateTime.now(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        String userString=JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        if(userString.startsWith("{")) {
+        String userString = JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if (userString.startsWith("{")) {
             UserVo userVo = JSON.parseObject(userString, UserVo.class);
             checkAndSet("updateBy", userVo.getId(), metaObject);
         }
         checkAndSet("updateTime", LocalDateTime.now(), metaObject);
     }
 
-    private void checkAndSet(String fieldName,Object value,MetaObject source){
-        if(source.hasSetter(fieldName)){
-            this.setFieldValByName(fieldName,value,source);
+    private void checkAndSet(String fieldName, Object value, MetaObject source) {
+        if (source.hasSetter(fieldName)) {
+            setFieldValByName(fieldName, value, source);
         }
     }
 }

@@ -81,10 +81,7 @@ public class SystemLogAspect {
         SysLog sysLog = method.getAnnotation(SysLog.class);
         String operation = sysLog.value();
         Object[] params = joinPoint.getArgs();
-        String paramStr = "";
-        for (Object param : params) {
-            paramStr += param;
-        }
+        String paramStr = JSON.toJSONString(params);
         if (e == null) {
             if (userVo != null) {
                 log.info("Ip:[{}],URI:[{}],用户:[{}],操作:[{}],方法名:[{}],参数:[{}],执行耗时:[{}]毫秒,返回值:[{}]", ip, url, userVo.getId(), operation, methodName, paramStr, duration, JSON.toJSONString(proceed));

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.everwing.cloud.service.platform.handler.MpObjectHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class MyBatisPlusConfig {
         dbConfig.setIdType(IdType.ID_WORKER_STR);
         globalConfig.setDbConfig(dbConfig);
         globalConfig.setSqlInjector(new LogicSqlInjector());
+        globalConfig.setMetaObjectHandler(new MpObjectHandler());
         return globalConfig;
     }
 

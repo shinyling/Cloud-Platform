@@ -2,6 +2,8 @@ package com.everwing.cloud.service.platform.biz;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.service.platform.entity.Role;
 import com.everwing.cloud.service.platform.entity.UserRole;
 import com.everwing.cloud.service.platform.service.IRoleService;
@@ -56,5 +58,25 @@ public class RoleBiz {
         userRole.setRoleId(role.getId());
         userRole.setUserId(id);
         return userRoleService.save(userRole);
+    }
+
+    public ResultJson add(Role role) {
+        boolean flag = roleService.save(role);
+        if (flag) {
+            return ResultJson.successWithMsg("角色保存成功.");
+        }
+        return ResultJson.fail("角色保存失败!");
+    }
+
+    public ResultJson removeById(String id) {
+        boolean flag = roleService.removeById(id);
+        if (flag) {
+            return ResultJson.successWithMsg("删除成功。");
+        }
+        return ResultJson.fail("删除失败!");
+    }
+
+    public ResultJson loadPage(Page page) {
+        return ResultJson.success(roleService.page(page));
     }
 }
