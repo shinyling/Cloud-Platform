@@ -4,12 +4,16 @@ import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.common.exception.BusinessException;
 import com.everwing.cloud.service.platform.anno.SysLog;
 import com.everwing.cloud.service.platform.biz.UserBiz;
+import com.everwing.cloud.service.platform.entity.UserGroupUser;
 import com.everwing.cloud.service.platform.group.AddGroup;
+import com.everwing.cloud.service.platform.group.LoadGroup;
+import com.everwing.cloud.service.platform.param.PagedParam;
 import com.everwing.cloud.service.platform.vo.AccountVo;
 import com.everwing.cloud.service.platform.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +49,18 @@ public class UserController {
     @GetMapping("delete/{mobile:1[3456789]\\d{9}}")
     public ResultJson delete(@PathVariable String mobile) {
         return userBiz.deleteUser(mobile);
+    }
+
+    @ApiOperation("根据用户组查询用户列表")
+    @PostMapping("loadUsersByGid")
+    @SysLog("根据用户组查询用户列表")
+    public ResultJson loadUsersByGid(@Validated(LoadGroup.class) @RequestBody PagedParam<UserGroupUser> queryParam) {
+        Assert.notNull(queryParam.getPage(), "分页参数未传入!");
+        Assert.state(queryParam.getPage().getCurrent() > 0, "分页参数错误!");
+        Assert.state(queryParam.getPage().getSize() > 0, "分页参数错误!");
+        Assert.notNull(queryParam.getT(), "参数传入错误!");
+        Assert.state(queryParam.getT().getGroupId() != null, "参数传入错误");
+        return userBiz.loadUsersByGid(queryParam);
     }
 
 }

@@ -2,11 +2,15 @@ package com.everwing.cloud.service.platform.biz;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.common.exception.BusinessException;
 import com.everwing.cloud.service.platform.entity.Permission;
 import com.everwing.cloud.service.platform.entity.Role;
 import com.everwing.cloud.service.platform.entity.User;
+import com.everwing.cloud.service.platform.entity.UserGroupUser;
+import com.everwing.cloud.service.platform.param.PagedParam;
+import com.everwing.cloud.service.platform.service.IUserGroupUserService;
 import com.everwing.cloud.service.platform.service.IUserService;
 import com.everwing.cloud.service.platform.vo.AccountVo;
 import com.everwing.cloud.service.platform.vo.UserVo;
@@ -35,6 +39,9 @@ public class UserBiz {
 
     @Autowired
     private PermissionBiz permissionBiz;
+
+    @Autowired
+    private IUserGroupUserService userGroupUserService;
 
     public AccountVo queryUserInfo(String mobile) throws BusinessException {
         AccountVo accountVo = new AccountVo();
@@ -95,5 +102,20 @@ public class UserBiz {
             return ResultJson.successWithMsg("用户删除成功!");
         }
         return ResultJson.fail("用户删除失败!");
+    }
+
+    public ResultJson loadUsersByGid(PagedParam<UserGroupUser> pagedParam) {
+        UserGroupUser userGroupUser = pagedParam.getT();
+        String groupId = userGroupUser.getGroupId();
+        QueryWrapper<UserGroupUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UserGroupUser::getGroupId, groupId);
+        IPage<UserGroupUser> groupUserIPage = userGroupUserService.page(pagedParam.getPage(), queryWrapper);
+        List<String> userIds = groupUserIPage.getRecords().stream().map(UserGroupUser::getUserId).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(userIds)) {
+            QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+            userQueryWrapper.lambda().in(User::getId, userIds);
+            return ResultJson.success(userService.list(userQueryWrapper));
+        }
+        return ResultJson.success(CollUtil.newArrayList());
     }
 }

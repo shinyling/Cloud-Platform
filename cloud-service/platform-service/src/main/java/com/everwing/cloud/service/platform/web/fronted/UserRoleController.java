@@ -1,20 +1,45 @@
 package com.everwing.cloud.service.platform.web.fronted;
 
 
+import com.everwing.cloud.common.entity.ResultJson;
+import com.everwing.cloud.service.platform.anno.SysLog;
+import com.everwing.cloud.service.platform.biz.UserRoleBiz;
+import com.everwing.cloud.service.platform.entity.UserRole;
+import com.everwing.cloud.service.platform.group.AddGroup;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
- *  前端控制器
- * </p>
+ * 用户角色
  *
  * @author shiny
- * @since 2019-12-05
+ * @date 2019-12-05
  */
+@Api(value = "用户角色", tags = "用户角色")
 @RestController
-@RequestMapping("//user-role")
+@RequestMapping("/userRole")
 public class UserRoleController {
 
+    @Autowired
+    private UserRoleBiz userRoleBiz;
+
+    @ApiOperation("新增用户角色关系")
+    @PostMapping("add")
+    @SysLog("新增用户角色关系")
+    public ResultJson add(@Validated(AddGroup.class) @RequestBody UserRole userRole) {
+        return userRoleBiz.add(userRole);
+    }
+
+    @ApiOperation("删除用户角色关系")
+    @PostMapping("delete")
+    @SysLog("删除用户角色关系")
+    public ResultJson delete(@Validated(AddGroup.class) @RequestBody UserRole userRole) {
+        return userRoleBiz.delete(userRole);
+    }
 }

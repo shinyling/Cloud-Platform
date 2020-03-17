@@ -1,6 +1,7 @@
 package com.everwing.cloud.service.platform.config;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.everwing.cloud.service.platform.handler.MpObjectHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.EnumOrdinalTypeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,6 +55,10 @@ public class MyBatisPlusConfig {
         String mapperLocations = "classpath:com/everwing/cloud/service/platform/mapper/xml/*Mapper.xml";
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
+        sqlSessionFactory.setTypeEnumsPackage("com.everwing.cloud.service.platform.enums");
+        MybatisConfiguration mybatisConfiguration = new MybatisConfiguration();
+        mybatisConfiguration.setDefaultEnumTypeHandler(EnumOrdinalTypeHandler.class);
+        sqlSessionFactory.setConfiguration(mybatisConfiguration);
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources(mapperLocations));
         sqlSessionFactory.setGlobalConfig(globalConfig());
