@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.service.platform.entity.Role;
+import com.everwing.cloud.service.platform.entity.UserGroupRole;
 import com.everwing.cloud.service.platform.entity.UserRole;
 import com.everwing.cloud.service.platform.service.IRoleService;
+import com.everwing.cloud.service.platform.service.IUserGroupRoleService;
 import com.everwing.cloud.service.platform.service.IUserRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class RoleBiz {
 
     @Autowired
     private IRoleService roleService;
+
+    @Autowired
+    private IUserGroupRoleService userGroupRoleService;
 
     public List<Role> queryRolesByUserId(String userId) {
         QueryWrapper<UserRole> userRoleQueryWrapper = new QueryWrapper<>();
@@ -78,5 +83,19 @@ public class RoleBiz {
 
     public ResultJson loadPage(Page page) {
         return ResultJson.success(roleService.page(page));
+    }
+
+    public ResultJson loadRolesByGroupId(String groupId) {
+        QueryWrapper<UserGroupRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UserGroupRole::getGroupId, groupId);
+        List<UserGroupRole> userGroupRoleList = userGroupRoleService.list(queryWrapper);
+        List<String> roleIds = userGroupRoleList.stream()
+                .map(userGroupRole -> userGroupRole.getRoleId()).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(roleIds)) {
+            QueryWrapper<Role> roleQueryWrapper = new QueryWrapper<>();
+            roleQueryWrapper.lambda().in(Role::getId, roleIds);
+            return ResultJson.success(roleService.list(roleQueryWrapper));
+        }
+        return ResultJson.success(Collections.emptyList());
     }
 }

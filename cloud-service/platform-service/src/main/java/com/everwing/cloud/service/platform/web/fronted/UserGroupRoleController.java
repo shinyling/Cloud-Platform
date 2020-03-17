@@ -9,9 +9,11 @@ import com.everwing.cloud.service.platform.group.AddGroup;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author shiny
@@ -39,11 +41,4 @@ public class UserGroupRoleController {
         return userGroupRoleBiz.delete(userGroupRole);
     }
 
-    @ApiOperation("查找组的角色")
-    @GetMapping("findRolesBygroup/{groupId}")
-    @SysLog("查找组的角色")
-    public ResultJson findRolesByGroup(@PathVariable String groupId) {
-        Assert.notNull(groupId, "参数错误!");
-        return userGroupRoleBiz.loadRoleByGroupId(groupId);
-    }
 }

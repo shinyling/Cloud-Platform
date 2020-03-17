@@ -1,7 +1,5 @@
 package com.everwing.cloud.service.platform.web.fronted;
 
-
-import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.service.platform.anno.SysLog;
@@ -10,6 +8,7 @@ import com.everwing.cloud.service.platform.entity.Role;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -46,5 +45,13 @@ public class RoleController {
         Assert.state(page.getCurrent() > 0, "分页参数错误!");
         Assert.state(page.getSize() > 0, "分页参数错误!");
         return roleBiz.loadPage(page);
+    }
+
+    @ApiOperation("查找组的角色")
+    @GetMapping("findRolesByGroupId/{groupId}")
+    @SysLog("查找组的角色")
+    public ResultJson findRolesByGroupId(@PathVariable String groupId) {
+        Assert.notNull(groupId, "参数错误!");
+        return roleBiz.loadRolesByGroupId(groupId);
     }
 }
