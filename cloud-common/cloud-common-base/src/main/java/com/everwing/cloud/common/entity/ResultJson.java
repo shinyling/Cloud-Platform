@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResultJson<T> {
 
-    public static final String SUCCESS="200";
+    public static final String SUCCESS = "200";
 
-    public static final String FAIL="500";
+    public static final String FAIL = "500";
 
     private String code;
 
@@ -22,45 +22,45 @@ public class ResultJson<T> {
 
     private T data;
 
-    public ResultJson(ErrorCodeEnum errorCodeEnum){
-        this.code=errorCodeEnum.getCode();
-        this.message=errorCodeEnum.getMessage();
+    public ResultJson(ErrorCodeEnum errorCodeEnum) {
+        this.code = errorCodeEnum.getCode();
+        this.message = errorCodeEnum.getMessage();
     }
 
-    public ResultJson(String msg){
-        this.code=ErrorCodeEnum.SUCCESS.getCode();
-        this.message=msg;
+    public ResultJson(String msg) {
+        this.code = ErrorCodeEnum.SUCCESS.getCode();
+        this.message = msg;
     }
 
-    public ResultJson(T t){
-        this.code=ErrorCodeEnum.SUCCESS.getCode();
-        this.message=ErrorCodeEnum.SUCCESS.getMessage();
-        this.data=t;
+    public ResultJson(T t) {
+        this.code = ErrorCodeEnum.SUCCESS.getCode();
+        this.message = ErrorCodeEnum.SUCCESS.getMessage();
+        this.data = t;
     }
 
     public ResultJson(ErrorCodeEnum codeEnum, String msg) {
-        this.code=codeEnum.getCode();
-        this.message=msg;
+        this.code = codeEnum.getCode();
+        this.message = msg;
     }
 
-    public static ResultJson success(Object t){
+    public static ResultJson success(Object t) {
         return new ResultJson(t);
     }
 
-    public static ResultJson successWithMsg(String message){
+    public static ResultJson successWithMsg(String message) {
         return new ResultJson(message);
     }
 
-    public static ResultJson fail(){
+    public static ResultJson fail() {
         return new ResultJson(ErrorCodeEnum.FAIL);
     }
 
-    public static ResultJson fail(String msg){
-        return new ResultJson(ErrorCodeEnum.FAIL,msg);
+    public static ResultJson fail(String msg) {
+        return new ResultJson(ErrorCodeEnum.FAIL, msg);
     }
 
 
-    public static ResultJson noContent(){
+    public static ResultJson noContent() {
         return new ResultJson(ErrorCodeEnum.NO_CONTENT);
     }
 

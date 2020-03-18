@@ -60,3 +60,11 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image:
+    width: 150
+    height: 150
+  web-server-url: 10.1.20.90/
+  tracker-list: 10.1.20.90:22122

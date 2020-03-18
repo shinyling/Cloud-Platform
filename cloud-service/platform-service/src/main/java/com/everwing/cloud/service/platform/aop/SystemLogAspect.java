@@ -1,6 +1,7 @@
 package com.everwing.cloud.service.platform.aop;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.everwing.cloud.common.vo.UserVo;
 import com.everwing.cloud.service.platform.anno.SysLog;
 import lombok.extern.slf4j.Slf4j;
@@ -81,12 +82,12 @@ public class SystemLogAspect {
         SysLog sysLog = method.getAnnotation(SysLog.class);
         String operation = sysLog.value();
         Object[] params = joinPoint.getArgs();
-        String paramStr = JSON.toJSONString(params);
+        String paramStr = JSON.toJSONString(params, SerializerFeature.IgnoreNonFieldGetter);
         if (e == null) {
             if (userVo != null) {
-                log.info("Ip:[{}],URI:[{}],用户:[{}],操作:[{}],方法名:[{}],参数:[{}],执行耗时:[{}]毫秒,返回值:[{}]", ip, url, userVo.getId(), operation, methodName, paramStr, duration, JSON.toJSONString(proceed));
+                log.info("Ip:[{}],URI:[{}],用户:[{}],操作:[{}],方法名:[{}],参数:[{}],执行耗时:[{}]毫秒,返回值:[{}]", ip, url, userVo.getId(), operation, methodName, paramStr, duration, JSON.toJSONString(proceed, SerializerFeature.IgnoreNonFieldGetter));
             } else {
-                log.info("Ip:[{}],URI:[{}],操作:[{}],方法名:[{}],参数:[{}],执行耗时:[{}]毫秒,返回值:[{}]", ip, url, operation, methodName, paramStr, duration, JSON.toJSONString(proceed));
+                log.info("Ip:[{}],URI:[{}],操作:[{}],方法名:[{}],参数:[{}],执行耗时:[{}]毫秒,返回值:[{}]", ip, url, operation, methodName, paramStr, duration, JSON.toJSONString(proceed, SerializerFeature.IgnoreNonFieldGetter));
             }
         } else {
             if (userVo != null) {
