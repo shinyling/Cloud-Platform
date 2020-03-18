@@ -5,10 +5,12 @@ import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.service.platform.anno.SysLog;
 import com.everwing.cloud.service.platform.biz.RoleBiz;
 import com.everwing.cloud.service.platform.entity.Role;
+import com.everwing.cloud.service.platform.param.PagedParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,8 +42,8 @@ public class RoleController {
     @ApiOperation("查看角色列表")
     @PostMapping("loadPage")
     @SysLog("查看角色列表")
-    public ResultJson loadPage(@RequestBody Page page) {
-        Assert.notNull(page, "请传人分页参数!");
+    public ResultJson loadPage(@Validated @RequestBody PagedParam<Role> pagedParam) {
+        Page page = pagedParam.getPage();
         Assert.state(page.getCurrent() > 0, "分页参数错误!");
         Assert.state(page.getSize() > 0, "分页参数错误!");
         return roleBiz.loadPage(page);

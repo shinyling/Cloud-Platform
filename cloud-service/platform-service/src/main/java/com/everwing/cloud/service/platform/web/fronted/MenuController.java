@@ -52,8 +52,7 @@ public class MenuController {
     @ApiOperation("菜单列表")
     @PostMapping("loadPage")
     @SysLog("菜单列表")
-    public ResultJson loadPage(@RequestBody PagedParam<Menu> pagedParam) {
-        Assert.notNull(pagedParam.getPage(), "分页参数错误!");
+    public ResultJson loadPage(@Validated @RequestBody PagedParam<Menu> pagedParam) {
         Assert.state(pagedParam.getPage().getCurrent() > 0, "分页参数错误!");
         Assert.state(pagedParam.getPage().getSize() > 0, "分页参数错误!");
         return menuBiz.loadPage(pagedParam);

@@ -36,12 +36,12 @@ security:
   oauth2:
     resource:
       id: platform-resource
-      user-info-uri: http://localhost:8222/uaa/users/current #获取当前Token的用户信息
+      user-info-uri: http://localhost:8888/auth/uaa/users/current #获取当前Token的用户信息
       prefer-token-info: false
     client:
       clientId: client
       clientSecret: secret
-      accessTokenUri: http://localhost:8222/uaa/oauth/token #获取Token
+      accessTokenUri: http://localhost:8888/auth/uaa/oauth/token #获取Token
       grant-type: password
       scope: app
 logging:
