@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author shiny
  * @date 2019-12-05
  */
-@Api(value = "用户角色", tags = "用户角色")
+@Api(value = "用户-角色", tags = "用户-角色")
 @RestController
 @RequestMapping("/userRole")
 public class UserRoleController {
@@ -29,16 +29,16 @@ public class UserRoleController {
     @Autowired
     private UserRoleBiz userRoleBiz;
 
-    @ApiOperation("新增用户角色关系")
+    @ApiOperation("新增用户-角色")
     @PostMapping("add")
-    @SysLog("新增用户角色关系")
+    @SysLog("新增用户-角色")
     public ResultJson add(@Validated(AddGroup.class) @RequestBody UserRole userRole) {
         return userRoleBiz.add(userRole);
     }
 
-    @ApiOperation("删除用户角色关系")
+    @ApiOperation("删除用户-角色")
     @PostMapping("delete")
-    @SysLog("删除用户角色关系")
+    @SysLog("删除用户-角色")
     public ResultJson delete(@Validated(AddGroup.class) @RequestBody UserRole userRole) {
         return userRoleBiz.delete(userRole);
     }

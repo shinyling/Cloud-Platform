@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author shiny
  * @since 2019-12-05
  */
-@Api(value = "权限文件", tags = "权限文件")
+@Api(value = "权限-文件", tags = "权限-文件")
 @RestController
 @RequestMapping("/permissionFile")
 public class PermissionFileController {
@@ -29,16 +29,16 @@ public class PermissionFileController {
     @Autowired
     private PermissionFileBiz permissionFileBiz;
 
-    @ApiOperation("新增权限文件绑定")
+    @ApiOperation("新增权限-文件")
     @PostMapping("add")
-    @SysLog("新增权限文件绑定")
+    @SysLog("新增权限-文件")
     public ResultJson add(@Validated(AddGroup.class) @RequestBody PermissionFile permissionFile) {
         return permissionFileBiz.add(permissionFile);
     }
 
-    @ApiOperation("删除权限文件绑定关系")
+    @ApiOperation("删除权限-文件")
     @PostMapping("delete")
-    @SysLog("删除权限文件绑定关系")
+    @SysLog("删除权限-文件")
     public ResultJson delete(@Validated(AddGroup.class) @RequestBody PermissionFile permissionFile) {
         return permissionFileBiz.delete(permissionFile);
     }

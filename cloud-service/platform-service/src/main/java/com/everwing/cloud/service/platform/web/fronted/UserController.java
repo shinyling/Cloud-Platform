@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @author shiny
  * @date 2019-12-05
  */
-@Api(value = "平台用户", tags = "平台用户")
+@Api(value = "用户", tags = "用户")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -31,7 +31,7 @@ public class UserController {
     @Autowired
     private UserBiz userBiz;
 
-    @ApiOperation(value = "通过账号加载平台用户信息")
+    @ApiOperation(value = "通过账号加载用户信息")
     @GetMapping("load/{mobile:1[3456789]\\d{9}}")
     @SysLog("通过账号加载用户信息")
     public ResultJson loadByMobile(@PathVariable String mobile) throws BusinessException {
@@ -39,7 +39,7 @@ public class UserController {
         return ResultJson.success(accountVo);
     }
 
-    @ApiOperation(value = "平台用户注册")
+    @ApiOperation(value = "用户注册")
     @PostMapping("register")
     @SysLog("用户注册")
     public ResultJson register(@RequestBody @Validated(AddGroup.class) UserVo userVo) {

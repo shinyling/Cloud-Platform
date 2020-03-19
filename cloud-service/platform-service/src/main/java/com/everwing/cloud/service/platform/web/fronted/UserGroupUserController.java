@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author shiny
  * @date 2020-03-16
  */
-@Api(value = "用户组用户关系", tags = "用户组用户关系")
+@Api(value = "用户组-用户", tags = "用户组-用户")
 @RestController
 @RequestMapping("/userGroupUser")
 public class UserGroupUserController {
@@ -30,16 +30,16 @@ public class UserGroupUserController {
     @Autowired
     private UserGroupUserBiz userGroupUserBiz;
 
-    @ApiOperation("新增用户组用户关系")
+    @ApiOperation("新增用户组-用户")
     @PostMapping("add")
-    @SysLog("新增用户组用户关系")
+    @SysLog("新增用户组-用户")
     public ResultJson add(@RequestBody @Validated(AddGroup.class) UserGroupUser userGroupUser) {
         return userGroupUserBiz.add(userGroupUser);
     }
 
-    @ApiOperation("批量新增用户组用户关系")
+    @ApiOperation("批量新增用户组-用户")
     @PostMapping("batchAdd")
-    @SysLog("批量新增用户组用户关系")
+    @SysLog("批量新增用户组-用户")
     public ResultJson batchAdd(@Validated @RequestBody ValidList<UserGroupUser> userGroupUserList) {
         return userGroupUserBiz.batchAdd(userGroupUserList);
     }

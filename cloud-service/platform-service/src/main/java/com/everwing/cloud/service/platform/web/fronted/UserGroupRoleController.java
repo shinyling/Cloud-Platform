@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author shiny
  * @date 2019-12-05
  */
-@Api(value = "用户组角色关联", tags = "用户组角色关联")
+@Api(value = "用户组-角色", tags = "用户组-角色")
 @RestController
 @RequestMapping("/userGroupRole")
 public class UserGroupRoleController {
@@ -27,14 +27,14 @@ public class UserGroupRoleController {
     @Autowired
     private UserGroupRoleBiz userGroupRoleBiz;
 
-    @ApiOperation("增加用户组角色关联")
+    @ApiOperation("增加用户组-角色")
     @PostMapping("add")
     @SysLog("增加用户组角色关联")
     public ResultJson add(@Validated(AddGroup.class) @RequestBody UserGroupRole userGroupRole) {
         return userGroupRoleBiz.add(userGroupRole);
     }
 
-    @ApiOperation("删除用户组角色关联")
+    @ApiOperation("删除用户组-角色")
     @PostMapping("delete")
     @SysLog("删除用户组角色关联")
     public ResultJson delete(@Validated(AddGroup.class) @RequestBody UserGroupRole userGroupRole) {

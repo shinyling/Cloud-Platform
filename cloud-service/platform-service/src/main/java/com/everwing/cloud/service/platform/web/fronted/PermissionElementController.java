@@ -10,14 +10,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 权限元素
+ *
  * @author shiny
  * @since 2019-12-05
  */
-@Api(value = "权限元素",tags = "权限元素")
+@Api(value = "权限-元素", tags = "权限-元素")
 @RestController
 @RequestMapping("/permissionElement")
 public class PermissionElementController {
@@ -25,17 +29,17 @@ public class PermissionElementController {
     @Autowired
     private PermissionElementBiz permissionElementBiz;
 
-    @ApiOperation("新增权限元素")
+    @ApiOperation("新增权限-元素")
     @PostMapping("add")
-    @SysLog("新增权限元素")
-    public ResultJson add(@Validated(AddGroup.class) @RequestBody PermissionElement permissionElement){
+    @SysLog("新增权限-元素")
+    public ResultJson add(@Validated(AddGroup.class) @RequestBody PermissionElement permissionElement) {
         return permissionElementBiz.add(permissionElement);
     }
 
-    @ApiOperation("删除权限元素")
+    @ApiOperation("删除权限-元素")
     @PostMapping("delete")
-    @SysLog("删除权限元素")
-    public ResultJson deleteById(@Validated(AddGroup.class) @RequestBody PermissionElement permissionElement){
+    @SysLog("删除权限-元素")
+    public ResultJson deleteById(@Validated(AddGroup.class) @RequestBody PermissionElement permissionElement) {
         return permissionElementBiz.delete(permissionElement);
     }
 
