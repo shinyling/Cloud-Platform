@@ -7,6 +7,9 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+        metadata:
+          management:
+            context-path: ${server.servlet.context-path}/actuator
   main:
     allow-bean-definition-overriding: true
 server:

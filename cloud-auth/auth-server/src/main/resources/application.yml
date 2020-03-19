@@ -3,6 +3,15 @@ spring:
     active: dev
   application:
     name: auth-server
+  boot:
+    admin:
+      client:
+        instance:
+          name: auth-server
+          prefer-ip: true
+          service-url: http://localhost:8222/uaa
+        enabled: true
+        url: http://localhost:8103
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC
