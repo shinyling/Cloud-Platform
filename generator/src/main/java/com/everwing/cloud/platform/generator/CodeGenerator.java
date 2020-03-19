@@ -79,7 +79,7 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude("user_group_user", "user_group_permission");
+        strategy.setInclude("operation");
         strategy.setTablePrefix("");
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);

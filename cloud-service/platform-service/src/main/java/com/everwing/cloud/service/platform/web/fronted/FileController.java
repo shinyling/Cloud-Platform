@@ -17,12 +17,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -54,15 +54,23 @@ public class FileController {
     @ApiOperation("文件下载")
     @GetMapping("download/{id}")
     @SysLog("文件下载")
-    public ResultJson download(@PathVariable String id, HttpServletResponse response) throws IOException {
+    public ResultJson download(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Assert.notNull(id, "参数错误!");
         ResultJson resultJson = fileBiz.download(id);
         if (resultJson.getCode().equals(ErrorCodeEnum.SUCCESS.getCode())) {
             Map<String, Object> resultMap = (Map<String, Object>) resultJson.getData();
             String fileName = (String) resultMap.get("fileName");
             byte[] bytes = (byte[]) resultMap.get("file");
+            String userAgent = request.getHeader("User-Agent");
+            // 针对IE或者以IE为内核的浏览器：
+            if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
+                fileName = java.net.URLEncoder.encode(fileName, "UTF-8");
+            } else {
+                // 非IE浏览器的处理：
+                fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+            }
             response.setContentType("application/x-download; charset=utf-8");
-            response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
             ByteArrayInputStream byteArrayInputStream = null;
             BufferedInputStream bis = null;
             try {

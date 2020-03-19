@@ -41,12 +41,14 @@ public class UserController {
 
     @ApiOperation(value = "平台用户注册")
     @PostMapping("register")
+    @SysLog("用户注册")
     public ResultJson register(@RequestBody @Validated(AddGroup.class) UserVo userVo) {
         return userBiz.addUser(userVo);
     }
 
     @ApiOperation(value = "删除用户")
-    @GetMapping("delete/{mobile:1[3456789]\\d{9}}")
+    @DeleteMapping("delete/{mobile:1[3456789]\\d{9}}")
+    @SysLog("删除用户")
     public ResultJson delete(@PathVariable String mobile) {
         return userBiz.deleteUser(mobile);
     }
