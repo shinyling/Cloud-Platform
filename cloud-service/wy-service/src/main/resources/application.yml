@@ -20,6 +20,15 @@ spring:
     url: jdbc:mysql://10.1.5.68:3306/tenant_1232590503343169536?useUnicode=true&serverTimezone=UTC&allowMultiQueries=true
     username: xqvm5b
     password: Py4328djg*
+  boot:
+    admin:
+      client:
+        instance:
+          name: wy
+          prefer-ip: true
+          service-url: http://localhost:8001
+        enabled: true
+        url: http://localhost:8103
 security:
   oauth2:
     resource:

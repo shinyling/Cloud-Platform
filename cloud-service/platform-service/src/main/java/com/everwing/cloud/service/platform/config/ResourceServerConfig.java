@@ -21,7 +21,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private ResourceServerProperties sso;
 
-    private static final String RESOURCE_ID="platform-resource";
+    private static final String RESOURCE_ID = "platform-resource";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -33,14 +33,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         //配置哪些请求需要验证
         http.authorizeRequests()
-                .antMatchers("/actuator","/actuator/*","/v2/api-docs", "/swagger-resources/configuration/ui",
-                        "/swagger-resources","/swagger-resources/configuration/security",
-                        "/swagger-ui.html","/course/coursebase/**","/company/query","/user/register").permitAll()
+                .antMatchers("/actuator", "/actuator/**", "/v2/api-docs", "/swagger-resources/configuration/ui",
+                        "/swagger-resources", "/swagger-resources/configuration/security",
+                        "/swagger-ui.html", "/course/coursebase/**", "/company/query", "/user/register").permitAll()
                 .anyRequest().authenticated();
     }
 
     @Bean
-    public CustomUserInfoTokenServices customUserInfoTokenServices(){
+    public CustomUserInfoTokenServices customUserInfoTokenServices() {
         return new CustomUserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());
     }
 }

@@ -32,6 +32,15 @@ spring:
   flyway:
     locations: classpath:/db
     baseline-on-migrate: true
+  boot:
+    admin:
+      client:
+        instance:
+          name: platform
+          prefer-ip: true
+          service-url: http://localhost:8000
+        enabled: true
+        url: http://localhost:8103
 security:
   oauth2:
     resource:

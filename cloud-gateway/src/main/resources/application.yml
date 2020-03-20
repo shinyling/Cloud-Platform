@@ -14,6 +14,15 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+  boot:
+    admin:
+      client:
+        instance:
+          name: gateway
+          prefer-ip: true
+          service-url: http://localhost:8888
+        enabled: true
+        url: http://localhost:8103
 zuul:
   host:
     connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
