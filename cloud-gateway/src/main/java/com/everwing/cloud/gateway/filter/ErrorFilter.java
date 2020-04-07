@@ -1,37 +1,23 @@
 package com.everwing.cloud.gateway.filter;
 
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.core.Ordered;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 @Slf4j
-public class ErrorFilter extends ZuulFilter {
+public class ErrorFilter implements GatewayFilter, Ordered {
 
     @Override
-    public String filterType() {
-        return "error";
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        log.info("ServerGatewayFilter filter ");
+        return chain.filter(exchange);
     }
 
     @Override
-    public int filterOrder() {
-        return 10;
+    public int getOrder() {
+        return 0;
     }
-
-    @Override
-    public boolean shouldFilter() {
-        return true;
-    }
-
-    @Override
-    public Object run() {
-        RequestContext ctx = RequestContext.getCurrentContext();
-        Throwable throwable = ctx.getThrowable();
-        log.error("this is a ErrorFilter : {}", throwable.getCause().getMessage());
-        ctx.set("error.status_code", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        ctx.set("error.exception", throwable.getCause());
-        return null;
-    }
-
 }

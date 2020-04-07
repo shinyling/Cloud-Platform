@@ -1,22 +1,19 @@
 package com.everwing.cloud.service.wy.datasource;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.everwing.cloud.service.platform.api.CompanyApi;
+import com.everwing.cloud.service.platform.vo.CompanyVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.stereotype.Component;
 
-import com.everwing.cloud.service.platform.api.CompanyApi;
-import com.everwing.cloud.service.platform.vo.CompanyVo;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author DELL shiny
@@ -35,16 +32,16 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     @Value("${spring.datasource.password}")
     private String password;
 
-    @Autowired
+    @Reference
     private CompanyApi companyApi;
 
     //保存动态创建的数据源
-    private static final Map<Object,Object> targetDataSource = new HashMap<>();
+    private static final Map<Object, Object> targetDataSource = new HashMap<>();
 
     //主数据库初始化
     @PostConstruct
     private void init() {
-        DataSource dataSource= DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
+        DataSource dataSource = DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
                 .driverClassName(driver)
                 .url(url)
                 .username(username)
@@ -55,7 +52,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     @Override
     protected String determineCurrentLookupKey() {
-        String dataSourceName = StringUtils.defaultIfBlank(DataBaseContextHolder.getCompanyId(),DataSourceUtil.DEFAULT);
+        String dataSourceName = StringUtils.defaultIfBlank(DataBaseContextHolder.getCompanyId(), DataSourceUtil.DEFAULT);
         return dataSourceName;
     }
 
@@ -64,8 +61,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         // 根据数据库选择方案，拿到要访问的数据库
         String dataSourceName = determineCurrentLookupKey();
         // 根据数据库名字，从已创建的数据库中获取要访问的数据库
-        Object dataSource =  targetDataSource.get(dataSourceName);
-        if(null == dataSource) {
+        Object dataSource = targetDataSource.get(dataSourceName);
+        if (null == dataSource) {
             //从已创建的数据库中获取要访问的数据库，如果没有则创建一个
             dataSource = this.selectDataSource(dataSourceName);
         }
@@ -74,6 +71,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     /**
      * 该方法为同步方法，防止并发创建两个相同的数据库
+     *
      * @param dbname
      * @return
      */
@@ -100,6 +98,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     /**
      * 查询对应数据库的信息
+     *
      * @param dbname
      * @return
      */
@@ -109,11 +108,11 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         DataBaseContextHolder.setCompanyId(DataSourceUtil.DEFAULT);
         // 查询所需信息
         CompanyVo database = companyApi.query(dbname);
-        if(database==null){
+        if (database == null) {
             return null;
         }
         // 切换回目标库
-        oriSource=StringUtils.defaultIfBlank(oriSource,database.getCompanyId());
+        oriSource = StringUtils.defaultIfBlank(oriSource, database.getCompanyId());
         DataBaseContextHolder.setCompanyId(oriSource);
         DataSource dataSource = DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
                 .driverClassName(this.driver)

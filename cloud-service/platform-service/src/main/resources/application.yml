@@ -1,8 +1,5 @@
 spring:
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
     stream:
       binders:
         defaultRabbit:
@@ -24,11 +21,6 @@ spring:
     url: jdbc:mysql://10.1.5.68:3306/ucenter?useUnicode=true&serverTimezone=UTC&allowMultiQueries=true
     username: root
     password: shiny
-  devtools:
-    restart:
-      enabled: true  #设置开启热部署
-      additional-paths: src/main/java #重启目录
-      exclude: WEB-INF/**
   flyway:
     locations: classpath:/db
     baseline-on-migrate: true
@@ -41,6 +33,8 @@ spring:
           service-url: http://localhost:8000
         enabled: true
         url: http://localhost:8103
+  main:
+    allow-bean-definition-overriding: true
 security:
   oauth2:
     resource:
@@ -77,3 +71,11 @@ fdfs:
     height: 150
   web-server-url: 10.1.20.90/
   tracker-list: 10.1.20.90:22122
+dubbo:
+  scan:
+    base-packages: com.everwing.cloud.service.platform.web.rpc
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848

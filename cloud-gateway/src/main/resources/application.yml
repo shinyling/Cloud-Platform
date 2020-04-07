@@ -14,6 +14,36 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          # 让gateway通过服务发现组件找到其他的微服务
+          enabled: true
+      routes:
+        - id: wy  # 唯一标识，通常使用服务id
+          uri: lb://wy  # 目标URL，lb代表从注册中心获取服务，lb是Load Balance的缩写
+          predicates:
+            # Predicate集合
+            - Path=/wy/**  # 匹配转发路径
+          filters:
+            # Filter集合
+            - StripPrefix=1  # 从第几级开始转发
+        - id: platform  # 唯一标识，通常使用服务id
+          uri: lb://platform  # 目标URL，lb代表从注册中心获取服务，lb是Load Balance的缩写
+          predicates:
+            # Predicate集合
+            - Path=/platform/**  # 匹配转发路径
+          filters:
+            # Filter集合
+            - StripPrefix=1  # 从第几级开始转发
+        - id: search  # 唯一标识，通常使用服务id
+          uri: lb://search  # 目标URL，lb代表从注册中心获取服务，lb是Load Balance的缩写
+          predicates:
+            # Predicate集合
+            - Path=/search/**  # 匹配转发路径
+          filters:
+            # Filter集合
+            - StripPrefix=1  # 从第几级开始转发
   boot:
     admin:
       client:
@@ -23,31 +53,6 @@ spring:
           service-url: http://localhost:8888
         enabled: true
         url: http://localhost:8103
-zuul:
-  host:
-    connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
-    socket-timeout-millis: 60000   #socket超时
-  routes:
-    wy:
-      path: /wy/**
-      serviceId: wy-service
-      sensitive-headers:
-    platform:
-      path: /platform/**
-      service-id: platform
-      sensitive-headers:
-    search:
-      path: /search/**
-      service-id: search
-      sensitive-headers:
-    admin:
-      path: /admin/**
-      service_id: admin-web
-      sensitive-headers:
-    auth:
-      path: /auth/**
-      service_id: auth-server
-      sensitive-headers:
     redis:
       host: 127.0.0.1
       password:

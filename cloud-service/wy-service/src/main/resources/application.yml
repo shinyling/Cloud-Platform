@@ -59,6 +59,13 @@ management:
       show-details: ALWAYS
 mybatis-plus:
   mapper-locations: classpath:com/everwing/cloud/service/wy/mapper/xml
-feign:
-  httpclient:
-    enabled: true
+dubbo:
+  scan:
+    base-packages: com.everwing.cloud.service.wy.web.rpc
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848
+  metadata-report:
+    address: nacos://localhost:8848

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: wy-service
+    name: wy
   profiles:
     active: dev
   main:

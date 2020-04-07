@@ -2,12 +2,12 @@ spring:
   profiles:
     active: dev
   application:
-    name: auth-server
+    name: auth
   boot:
     admin:
       client:
         instance:
-          name: auth-server
+          name: auth
           prefer-ip: true
           service-url: http://localhost:8222/uaa
         enabled: true
