@@ -3,18 +3,21 @@ package com.everwing.cloud.service.platform.biz;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.common.exception.BusinessException;
 import com.everwing.cloud.service.platform.entity.Permission;
 import com.everwing.cloud.service.platform.entity.Role;
 import com.everwing.cloud.service.platform.entity.User;
 import com.everwing.cloud.service.platform.entity.UserGroupUser;
+import com.everwing.cloud.service.platform.enums.IsLockEnum;
 import com.everwing.cloud.service.platform.param.PagedParam;
 import com.everwing.cloud.service.platform.service.IUserGroupUserService;
 import com.everwing.cloud.service.platform.service.IUserService;
 import com.everwing.cloud.service.platform.vo.AccountVo;
 import com.everwing.cloud.service.platform.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -54,7 +57,7 @@ public class UserBiz {
         if (user == null) {
             throw new BusinessException("账号不存在!");
         }
-        if (user.getIsLock()) {
+        if (user.getIsLock().equals(IsLockEnum.LOCKED)) {
             throw new BusinessException("账号已被锁定!");
         }
         accountVo.setUserVo(user.convertToUserVo());
@@ -117,5 +120,27 @@ public class UserBiz {
             return ResultJson.success(userService.list(userQueryWrapper));
         }
         return ResultJson.success(CollUtil.newArrayList());
+    }
+
+    public ResultJson loadPagedUser(PagedParam<UserVo> queryParam) {
+        UserVo userVo = queryParam.getT();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id", "username", "mobile", "is_lock", "create_time");
+        queryWrapper.lambda().like(userVo != null && StringUtils.isNotBlank(userVo.getUsername()), User::getUsername, userVo.getUsername())
+                .like(StringUtils.isNotBlank(userVo.getMobile()), User::getMobile, userVo.getMobile());
+        String[] ascArr = queryParam.getAscArr();
+        String[] descArr = queryParam.getDescArr();
+        queryWrapper.orderBy(ascArr != null && ascArr.length != 0, true, ascArr);
+        queryWrapper.orderBy(descArr != null && descArr.length != 0, false, descArr);
+        Page page = queryParam.getPage();
+        return ResultJson.success(userService.page(page, queryWrapper));
+    }
+
+    public ResultJson updateUser(User user) {
+        boolean flag = userService.updateById(user);
+        if (flag) {
+            return ResultJson.success("更新成功!");
+        }
+        return ResultJson.fail("更新失败!");
     }
 }

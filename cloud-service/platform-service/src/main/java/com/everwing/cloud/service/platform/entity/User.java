@@ -2,7 +2,9 @@ package com.everwing.cloud.service.platform.entity;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.everwing.cloud.service.platform.enums.IsLockEnum;
 import com.everwing.cloud.service.platform.vo.UserVo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -26,15 +28,17 @@ public class User {
 
     private Boolean status;
 
-    private Boolean isLock;
+    private IsLockEnum isLock;
 
     @TableLogic(value = "false", delval = "true")
     private Boolean isDelete;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     private String createBy;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     private String updateBy;

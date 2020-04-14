@@ -1,16 +1,12 @@
 package com.everwing.cloud.auth.service;
 
 import com.everwing.cloud.auth.dao.UserDao;
-import com.everwing.cloud.auth.entity.Role;
 import com.everwing.cloud.auth.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author DELL shiny
@@ -24,9 +20,9 @@ public class UserServiceDetail implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUsername(username);
-        if(user==null) {
-            throw new UsernameNotFoundException("用户名不存在");
+        User user = userDao.findByMobile(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("手机号不存在");
         }
         return user;
     }

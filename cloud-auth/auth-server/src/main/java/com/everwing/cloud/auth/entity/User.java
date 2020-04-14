@@ -1,18 +1,15 @@
 package com.everwing.cloud.auth.entity;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-
-import javax.persistence.*;
-
+import com.everwing.cloud.common.vo.UserVo;
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.everwing.cloud.common.vo.UserVo;
-
-import lombok.Data;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author DELL shiny
@@ -22,19 +19,22 @@ import lombok.Data;
 @Entity
 public class User implements UserDetails, Serializable {
 
-    private static final String serialVersionUID="6c0d00ea-f741-4501-b248-dd2a0459a620";
+    private static final String serialVersionUID = "6c0d00ea-f741-4501-b248-dd2a0459a620";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @Column(nullable = false,  unique = true, name = "mobile")
+    @Column
     private String username;
+
+    @Column
+    private String mobile;
 
     @Column
     private String password;
 
-    @Column(name="company_id")
+    @Column(name = "company_id")
     private String companyId;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -77,9 +77,9 @@ public class User implements UserDetails, Serializable {
         return true;
     }
 
-    public UserVo convertToUserVo(){
-        UserVo userVo=new UserVo();
-        BeanUtils.copyProperties(this,userVo);
+    public UserVo convertToUserVo() {
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(this, userVo);
         return userVo;
     }
 }

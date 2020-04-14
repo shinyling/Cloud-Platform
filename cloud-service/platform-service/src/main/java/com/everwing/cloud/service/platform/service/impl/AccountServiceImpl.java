@@ -1,9 +1,9 @@
 package com.everwing.cloud.service.platform.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.everwing.cloud.service.platform.entity.User;
+import com.everwing.cloud.service.platform.entity.Account;
 import com.everwing.cloud.service.platform.mapper.AccountMapper;
 import com.everwing.cloud.service.platform.service.IAccountService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author shiny
- * @since 2019-05-09
+ * @since 2020-04-07
  */
 @Service
-public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> implements IAccountService {
+public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements IAccountService {
 
 }

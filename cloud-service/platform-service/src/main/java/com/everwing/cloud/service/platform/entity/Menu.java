@@ -2,12 +2,14 @@ package com.everwing.cloud.service.platform.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.everwing.cloud.service.platform.group.AddGroup;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -37,4 +39,9 @@ public class Menu implements Serializable {
 
     private String icon;
 
+    @NotBlank(message = "菜单级数不能为空", groups = AddGroup.class)
+    private Integer level;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
 }

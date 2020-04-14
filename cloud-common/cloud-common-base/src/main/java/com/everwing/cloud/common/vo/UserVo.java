@@ -1,8 +1,8 @@
 package com.everwing.cloud.common.vo;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author DELL shiny
@@ -14,6 +14,8 @@ public class UserVo implements Serializable {
     private String id;
 
     private String username;
+
+    private String mobile;
 
     private String companyId;
 

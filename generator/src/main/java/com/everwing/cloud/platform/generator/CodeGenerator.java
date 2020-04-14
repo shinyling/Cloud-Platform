@@ -79,7 +79,11 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude("operation");
+        strategy.setExclude("ClientDetails", "element", "file", "flyway_schema_history", "hibernate_sequence", "menu"
+                , "oauth_access_token", "oauth_approvals", "oauth_client_token", "oauth_code", "oauth_refresh_token", "operation"
+                , "permission", "permission_element", "permission_file", "permission_menu", "permission_operation", "persistent_logins"
+                , "role", "role_permission", "user", "user_group", "user_group_permission", "user_group_role", "user_group_user"
+                , "user_role");
         strategy.setTablePrefix("");
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);

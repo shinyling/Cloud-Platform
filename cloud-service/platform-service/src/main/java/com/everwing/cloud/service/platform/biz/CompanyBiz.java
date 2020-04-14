@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.exception.BusinessException;
-import com.everwing.cloud.service.platform.constant.CompanyStateEnum;
 import com.everwing.cloud.service.platform.entity.Company;
+import com.everwing.cloud.service.platform.enums.CompanyStatusEnum;
 import com.everwing.cloud.service.platform.msg.SendMsg;
 import com.everwing.cloud.service.platform.service.ICompanyService;
 import com.everwing.cloud.service.platform.vo.CompanyVo;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,65 +37,65 @@ public class CompanyBiz {
     @Value("${spring.datasource.url}")
     private String url;
 
-    public List<CompanyVo> listAll(){
+    public List<CompanyVo> listAll() {
         return companyService.list().stream().map(Company::convertToVo).collect(Collectors.toList());
     }
 
     public CompanyVo selectById(String companyId) {
-        QueryWrapper<Company> queryWrapper=new QueryWrapper<>();
-        queryWrapper.lambda().eq(Company::getCompanyId,companyId)
-                .eq(Company::getState,CompanyStateEnum.AUDIT_SUCCESS.getState());
+        QueryWrapper<Company> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Company::getCompanyId, companyId)
+                .eq(Company::getStatus, CompanyStatusEnum.AUDIT_SUCCESS.getStatus());
         return Company.convertToVo(companyService.getOne(queryWrapper));
     }
 
     public CompanyVo add(CompanyVo companyVo) throws BusinessException {
-        Company company=Company.convertFromVo(companyVo);
-        QueryWrapper<Company> companyWrapper=new QueryWrapper<>();
-        companyWrapper.lambda().eq(Company::getCompanyName,company.getCompanyName());
-        Company exists=companyService.getOne(companyWrapper);
-        if(exists!=null){
+        Company company = Company.convertFromVo(companyVo);
+        QueryWrapper<Company> companyWrapper = new QueryWrapper<>();
+        companyWrapper.lambda().eq(Company::getCompanyName, company.getCompanyName());
+        Company exists = companyService.getOne(companyWrapper);
+        if (exists != null) {
             throw new BusinessException("公司名称已存在!");
         }
         //状态待审核
-        company.setState(CompanyStateEnum.WATING_AUDIT.getState());
-        String username=RandomUtil.randomString(6);
-        String password=RandomUtil.randomString(8).concat("*").concat(RandomUtil.randomStringUpper(2));
+        company.setStatus(CompanyStatusEnum.WAITING_AUDIT.getStatus());
+        String username = RandomUtil.randomString(6);
+        String password = RandomUtil.randomString(8).concat("*").concat(RandomUtil.randomStringUpper(2));
         company.setJdbcUsername(username);
         company.setJdbcPassword(password);
-        Snowflake snowflake=new Snowflake(2,5);
-        String dbName="tenant_".concat(String.valueOf(snowflake.nextId()));
-        String jdbcUrl=url.replace("ucenter",dbName);
+        Snowflake snowflake = new Snowflake(2, 5);
+        String dbName = "tenant_".concat(String.valueOf(snowflake.nextId()));
+        String jdbcUrl = url.replace("ucenter", dbName);
         company.setJdbcUrl(jdbcUrl);
-        boolean flag=companyService.save(company);
-        if(flag){
+        boolean flag = companyService.save(company);
+        if (flag) {
             return companyVo;
         }
         throw new BusinessException("创建公司失败!");
     }
 
     public void audit(CompanyVo companyVo) throws BusinessException {
-        Company company=Company.convertFromVo(companyVo);
+        Company company = Company.convertFromVo(companyVo);
         //审核成功
-        if(company.getState().equals(CompanyStateEnum.AUDIT_SUCCESS.getState())) {
-            boolean flag=companyService.updateById(company);
-            if(!flag){
+        if (company.getStatus().equals(CompanyStatusEnum.AUDIT_SUCCESS.getStatus())) {
+            boolean flag = companyService.updateById(company);
+            if (!flag) {
                 throw new BusinessException("审核公司失败!");
             }
-            company=companyService.getById(company.getCompanyId());
+            company = companyService.getById(company.getCompanyId());
             //todo 校验是否重发
             sendMsg.sendMsg(JSON.toJSONString(company));
-        //审核失败
-        }else if(company.getState().equals(CompanyStateEnum.AUDIT_FAIL.getState())){
-        //状态待审核
-        }else {
+            //审核失败
+        } else if (company.getStatus().equals(CompanyStatusEnum.AUDIT_FAIL.getStatus())) {
+            //状态待审核
+        } else {
             throw new BusinessException("公司状态错误，操作失败!");
         }
     }
 
-    public IPage<Map<String, Object>> listNames(Page page){
-        LambdaQueryWrapper<Company> companyLambdaQueryWrapper=new LambdaQueryWrapper<>();
-        companyLambdaQueryWrapper.select(Company::getCompanyId,Company::getCompanyAddress,Company::getCompanyLocation,Company::getCompanyName,Company::getState);
-        IPage<Map<String,Object>> pageMap= companyService.pageMaps(page,companyLambdaQueryWrapper);
+    public IPage<Map<String, Object>> listNames(Page page) {
+        LambdaQueryWrapper<Company> companyLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        companyLambdaQueryWrapper.select(Company::getCompanyId, Company::getCompanyAddress, Company::getCompanyLocation, Company::getCompanyName, Company::getStatus);
+        IPage<Map<String, Object>> pageMap = companyService.pageMaps(page, companyLambdaQueryWrapper);
         return pageMap;
     }
 }

@@ -1,3 +1,4 @@
+drop table if exists `user_group_user`;
 CREATE TABLE `user_group_user`
 (
     `group_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -7,6 +8,8 @@ CREATE TABLE `user_group_user`
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci
   ROW_FORMAT = Dynamic;
+
+drop table if exists `user_group_permission`;
 CREATE TABLE `user_group_permission`
 (
     `group_id`      varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,

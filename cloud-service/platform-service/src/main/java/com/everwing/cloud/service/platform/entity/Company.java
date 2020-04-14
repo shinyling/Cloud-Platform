@@ -1,23 +1,22 @@
 package com.everwing.cloud.service.platform.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.*;
-
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.everwing.cloud.service.platform.vo.CompanyVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.beans.BeanUtils;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author shiny
- * @since 2019-12-05
+ * @since 2020-04-07
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -27,7 +26,6 @@ public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.ID_WORKER_STR)
     private String companyId;
 
     private String jdbcUrl;
@@ -46,37 +44,65 @@ public class Company implements Serializable {
      */
     private String companyLocation;
 
-    private String state;
-
     /**
      * 企业详细地址
      */
     private String companyAddress;
 
-    @TableField(fill = FieldFill.INSERT)
-    private String createBy;
+    /**
+     * 工商执照注册号
+     */
+    private String bizRegistryLicenseNum;
 
-    @TableField(fill = FieldFill.INSERT)
+    /**
+     * 企业Logo
+     */
+    private String logoFileId;
+
+    /**
+     * 企业工商营业执照
+     */
+    private String bizSaleLicenseFileId;
+
+    /**
+     * 组织机构代码证
+     */
+    private String orgCodeFileId;
+
+    /**
+     * 税务登记证
+     */
+    private String taxLicenseFileId;
+
+    /**
+     * 物业资质证书，非必填
+     */
+    private String propertyCertFileId;
+
+    /**
+     * 0=不通过 1=通过 2=审核中
+     */
+    private Integer status;
+
+    /**
+     * 创建时间
+     */
     private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.UPDATE)
-    private String updateBy;
-
-    @TableField(fill = FieldFill.UPDATE)
+    /**
+     * 修改时间
+     */
     private LocalDateTime updateTime;
 
-    public static Company convertFromVo(CompanyVo companyVo){
-        Company company=new Company();
-        BeanUtils.copyProperties(companyVo,company);
-        return company;
+    public static CompanyVo convertToVo(Company company) {
+        CompanyVo companyVo = new CompanyVo();
+        BeanUtil.copyProperties(company, companyVo);
+        return companyVo;
     }
 
-    public static CompanyVo convertToVo(Company company){
-        if(null==company){
-            return null;
-        }
-        CompanyVo companyVo=new CompanyVo();
-        BeanUtils.copyProperties(company,companyVo);
-        return companyVo;
+    public static Company convertFromVo(CompanyVo companyVo) {
+        Company company = new Company();
+        BeanUtil.copyProperties(companyVo, company);
+        return company;
     }
 }

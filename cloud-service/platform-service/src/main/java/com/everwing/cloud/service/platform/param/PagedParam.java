@@ -1,5 +1,6 @@
 package com.everwing.cloud.service.platform.param;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 
@@ -18,4 +19,26 @@ public class PagedParam<T> {
 
     @NotNull(message = "分页参数错误")
     private Page page;
+
+    private String[] ascArr;
+
+    private String[] descArr;
+
+    public void setAscArr(String[] ascArr) {
+        String[] underLineArr = new String[ascArr.length];
+        for (int i = 0; i < ascArr.length; i++) {
+            String underLine = StringUtils.camelToUnderline(ascArr[i]);
+            underLineArr[i] = underLine;
+        }
+        this.ascArr = underLineArr;
+    }
+
+    public void setDescArr(String[] descArr) {
+        String[] underLineArr = new String[descArr.length];
+        for (int i = 0; i < descArr.length; i++) {
+            String underLine = StringUtils.camelToUnderline(descArr[i]);
+            underLineArr[i] = underLine;
+        }
+        this.descArr = underLineArr;
+    }
 }

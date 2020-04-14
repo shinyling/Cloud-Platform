@@ -1,8 +1,7 @@
 package com.everwing.cloud.service.platform.mapper;
 
+import com.everwing.cloud.service.platform.entity.Account;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.everwing.cloud.service.platform.entity.User;
-import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -10,9 +9,8 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author shiny
- * @since 2019-05-09
+ * @since 2020-04-07
  */
-@Repository
-public interface AccountMapper extends BaseMapper<User> {
+public interface AccountMapper extends BaseMapper<Account> {
 
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everwing.cloud.service.platform.mapper.AccountAndHouseMapper">
+
+    <delete id="removeByUnionIds" parameterType="List">
+        delete from account_and_house where (mobile,house_code) in
+        <foreach collection="accountAndHouseList" item="accountAndHouse" open="(" close=")" separator=",">
+            (#{accountAndHouse.mobile},#{accountAndHouse.houseCode})
+        </foreach>
+    </delete>
+</mapper>

@@ -19,10 +19,10 @@ public class BuildingBiz {
     private IBuildingService buildingService;
 
     public BuildingVo queryBuilding(BuildingVo buildingVo) {
-        QueryWrapper<Building> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("house_code",buildingVo.getHouseCode());
-        Building building=buildingService.getOne(queryWrapper);
-        if(building!=null) {
+        QueryWrapper<Building> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Building::getHouseCode, buildingVo.getHouseCode());
+        Building building = buildingService.getOne(queryWrapper);
+        if (building != null) {
             BeanUtils.copyProperties(building, buildingVo);
         }
         return buildingVo;

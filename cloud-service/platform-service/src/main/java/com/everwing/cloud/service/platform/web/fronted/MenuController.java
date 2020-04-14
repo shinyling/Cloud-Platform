@@ -49,9 +49,9 @@ public class MenuController {
         return menuBiz.updateById(menu);
     }
 
-    @ApiOperation("菜单列表")
+    @ApiOperation("分页加载菜单列表")
     @PostMapping("loadPage")
-    @SysLog("菜单列表")
+    @SysLog("分页加载菜单列表")
     public ResultJson loadPage(@Validated @RequestBody PagedParam<Menu> pagedParam) {
         Assert.state(pagedParam.getPage().getCurrent() > 0, "分页参数错误!");
         Assert.state(pagedParam.getPage().getSize() > 0, "分页参数错误!");

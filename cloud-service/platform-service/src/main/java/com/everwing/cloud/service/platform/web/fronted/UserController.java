@@ -4,6 +4,7 @@ import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.common.exception.BusinessException;
 import com.everwing.cloud.service.platform.anno.SysLog;
 import com.everwing.cloud.service.platform.biz.UserBiz;
+import com.everwing.cloud.service.platform.entity.User;
 import com.everwing.cloud.service.platform.entity.UserGroupUser;
 import com.everwing.cloud.service.platform.group.AddGroup;
 import com.everwing.cloud.service.platform.group.LoadGroup;
@@ -65,4 +66,21 @@ public class UserController {
         return userBiz.loadUsersByGid(queryParam);
     }
 
+    @ApiOperation("分页加载所有用户")
+    @PostMapping("loadPageData")
+    @SysLog("分页加载所有用户")
+    public ResultJson loadPageData(@RequestBody PagedParam<UserVo> queryParam) {
+        Assert.notNull(queryParam.getPage(), "分页参数未传入!");
+        Assert.state(queryParam.getPage().getCurrent() > 0, "分页参数错误!");
+        Assert.state(queryParam.getPage().getSize() > 0, "分页参数错误!");
+        return userBiz.loadPagedUser(queryParam);
+    }
+
+    @ApiOperation("更新用户信息")
+    @PostMapping("update")
+    @SysLog("更新用户信息")
+    public ResultJson updateUser(@RequestBody User user) {
+        Assert.notNull(user.getId(), "参数见传入错误!");
+        return userBiz.updateUser(user);
+    }
 }
