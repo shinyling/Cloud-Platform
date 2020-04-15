@@ -1,6 +1,7 @@
 package com.everwing.cloud.service.platform.utils;
 
 import com.everwing.cloud.service.platform.enums.IsLockEnum;
+import com.everwing.cloud.service.platform.enums.MenuParentEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,4 +26,15 @@ public class EnumUtil {
         return selectData;
     }
 
+    public static List<Map<String, Object>> convertParentEnumToSelectData() {
+        MenuParentEnum[] isParentEnums = MenuParentEnum.values();
+        List<Map<String, Object>> selectData = new ArrayList<>(isParentEnums.length);
+        for (int i = 0; i < isParentEnums.length; i++) {
+            Map<String, Object> select = new HashMap<>(2);
+            select.put("code", isParentEnums[i].getCode());
+            select.put("msg", isParentEnums[i].getMsg());
+            selectData.add(select);
+        }
+        return selectData;
+    }
 }

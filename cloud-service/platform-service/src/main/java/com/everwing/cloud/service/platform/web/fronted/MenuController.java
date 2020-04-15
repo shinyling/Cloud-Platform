@@ -57,4 +57,10 @@ public class MenuController {
         Assert.state(pagedParam.getPage().getSize() > 0, "分页参数错误!");
         return menuBiz.loadPage(pagedParam);
     }
+
+    @GetMapping("loadParent")
+    public ResultJson loadParent() {
+        return menuBiz.loadParent();
+    }
+
 }

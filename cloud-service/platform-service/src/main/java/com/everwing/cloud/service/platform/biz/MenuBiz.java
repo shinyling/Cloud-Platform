@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.entity.ResultJson;
 import com.everwing.cloud.service.platform.entity.Menu;
+import com.everwing.cloud.service.platform.enums.MenuParentEnum;
 import com.everwing.cloud.service.platform.param.PagedParam;
 import com.everwing.cloud.service.platform.service.IMenuService;
 import lombok.extern.slf4j.Slf4j;
@@ -55,5 +56,12 @@ public class MenuBiz {
     public ResultJson loadPage(PagedParam<Menu> pagedParam) {
         Page page = pagedParam.getPage();
         return ResultJson.success(menuService.page(page));
+    }
+
+    public ResultJson loadParent() {
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id", "name");
+        queryWrapper.lambda().eq(Menu::getParent, MenuParentEnum.PARENT);
+        return ResultJson.success(menuService.list(queryWrapper));
     }
 }

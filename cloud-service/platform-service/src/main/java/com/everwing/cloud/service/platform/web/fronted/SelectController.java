@@ -18,4 +18,9 @@ public class SelectController {
     public ResultJson loadIsLock() {
         return ResultJson.success(EnumUtil.convertLockEnumToSelectData());
     }
+
+    @GetMapping("isParent")
+    public ResultJson loadIsParent() {
+        return ResultJson.success(EnumUtil.convertParentEnumToSelectData());
+    }
 }
