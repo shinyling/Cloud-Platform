@@ -63,4 +63,8 @@ public class MenuController {
         return menuBiz.loadParent();
     }
 
+    @GetMapping("menuTree")
+    public ResultJson menuTree() {
+        return menuBiz.menuTree();
+    }
 }

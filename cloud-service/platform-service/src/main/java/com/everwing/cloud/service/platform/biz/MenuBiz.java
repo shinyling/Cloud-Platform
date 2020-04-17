@@ -1,5 +1,9 @@
 package com.everwing.cloud.service.platform.biz;
 
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
+import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.lang.tree.parser.NodeParser;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.everwing.cloud.common.entity.ResultJson;
@@ -11,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author DELL shiny
  * @date 2020/3/17
@@ -21,7 +27,6 @@ public class MenuBiz {
 
     @Autowired
     private IMenuService menuService;
-
 
     public ResultJson add(Menu menu) {
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
@@ -54,8 +59,13 @@ public class MenuBiz {
     }
 
     public ResultJson loadPage(PagedParam<Menu> pagedParam) {
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        String[] ascArr = pagedParam.getAscArr();
+        String[] descArr = pagedParam.getDescArr();
+        queryWrapper.orderBy(ascArr != null && ascArr.length != 0, true, ascArr);
+        queryWrapper.orderBy(descArr != null && descArr.length != 0, false, descArr);
         Page page = pagedParam.getPage();
-        return ResultJson.success(menuService.page(page));
+        return ResultJson.success(menuService.page(page, queryWrapper));
     }
 
     public ResultJson loadParent() {
@@ -64,4 +74,23 @@ public class MenuBiz {
         queryWrapper.lambda().eq(Menu::getParent, MenuParentEnum.PARENT);
         return ResultJson.success(menuService.list(queryWrapper));
     }
+
+    public ResultJson menuTree() {
+        List<Menu> menuList = menuService.list();
+        TreeNodeConfig treeNodeConfig = TreeNodeConfig.DEFAULT_CONFIG;
+        NodeParser<Menu, String> nodeParser = new NodeParser<Menu, String>() {
+            @Override
+            public void parse(Menu menu, Tree<String> tree) {
+                tree.setId(menu.getId());
+                tree.setParentId(menu.getPid());
+                tree.setName(menu.getName());
+                tree.setWeight(menu.getLevel());
+                tree.putExtra("url", menu.getUrl());
+                tree.putExtra("icon", menu.getIcon());
+            }
+        };
+        List<Tree<String>> treeList = TreeUtil.build(menuList, "0", treeNodeConfig, nodeParser);
+        return ResultJson.success(treeList);
+    }
+
 }
